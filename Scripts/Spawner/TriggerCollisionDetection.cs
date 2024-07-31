@@ -15,6 +15,8 @@ public class TriggerCollisionDetection : MonoBehaviour
     public static bool isMosquitoAttack=false, isCollideWithMosquitos = false;
     public static bool ableToAttack=false;
     public static bool isPiranhaDetectPlayer = false, isPiranhaHitWithPlayer = false;
+    public static bool isHitFruitItem = false;
+    public static bool isHitWithCoin = false;
     // This method is called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
     {
@@ -86,6 +88,16 @@ public class TriggerCollisionDetection : MonoBehaviour
         {
             Debug.Log("Player is Hit with Piranhas");
             isPiranhaHitWithPlayer = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Fruit"))
+        {
+            Debug.Log("Player is Hit with Fruit");
+            isHitFruitItem = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Coin"))
+        {
+            Debug.Log("Player is Hit with Coin");
+            isHitWithCoin = true;
         }
 
 

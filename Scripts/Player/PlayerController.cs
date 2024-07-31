@@ -27,13 +27,16 @@ public class PlayerController : MonoBehaviour
     private bool isSliding = false;
     bool isFighting = false;
     public GameObject refreshControler;
+    public GameObject shakeCam;
     [Header("CameraSelection")]
     public GameObject SwimCam;
     public GameObject FightCam;
     [Header("ParticleSystem")]
     public ParticleSystem boomParticleSystem;
-    public ParticleSystem poisonedParticleSystem;
+    public ParticleSystem poisonedTextParticleSystem,poisonedEffectParticleSystem;
     public ParticleSystem bloodParticleSystem;
+    public ParticleSystem hitWithItemParticleSystem;
+
 
 
     void Start()
@@ -50,10 +53,26 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(freezeFor3Sec());
         enemyFightModeManager();
         getDirection();
-        if(!isFighting && controlerData)
+        collectItems();
+        if (!isFighting && controlerData)
         {
             controller.center = new Vector3(0, 0, 0.34f);
             controlerData = false;
+        }
+        
+
+    }
+    void collectItems()
+    {
+        if (TriggerCollisionDetection.isHitFruitItem)
+        {
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitFruitItem = false;
+        }
+        if (TriggerCollisionDetection.isHitWithCoin)
+        {
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithCoin = false;
         }
     }
     void getDirection()
@@ -143,7 +162,9 @@ public class PlayerController : MonoBehaviour
         if (TriggerCollisionDetection.isCollideWithMosquitos)
         {
             swipeManager.SetActive(false);
-            poisonedParticleSystem.Play();
+            poisonedTextParticleSystem.Play();
+            poisonedEffectParticleSystem.Play();
+            StartCoroutine(shakeCamera());
             PlayerHealth -= 10;
             TriggerCollisionDetection.isCollideWithMosquitos = false;
             yield return new WaitForSeconds(3f);
@@ -156,12 +177,19 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         boomParticleSystem.Play();
-}
+
+        shakeCam.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        shakeCam.SetActive(false);
+    }
     //particle play
     IEnumerator playGetHit()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         anim.Play("GetHit");
+        shakeCam.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        shakeCam.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -296,5 +324,11 @@ public class PlayerController : MonoBehaviour
       //  animator.SetBool("isSliding", false);
 
         isSliding = false;
+    }
+    IEnumerator shakeCamera()
+    {
+        shakeCam.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        shakeCam.SetActive(false);
     }
 }
