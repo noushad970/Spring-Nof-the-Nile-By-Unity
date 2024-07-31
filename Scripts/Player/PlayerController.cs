@@ -10,10 +10,11 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed;
     public Animator anim;
     public static int PlayerHealth;
-    public static bool playerLostLife = false,playerleft=false,playerRight=false,playerMiddle=false;
+    public static bool playerLostLife = false,playerleft=false,playerRight=false,playerMiddle=false,controlerData=true;
     private int desiredLane = 1; //0:left 1:middle 2:right
     public float laneDistance = 6; //distance between two lanes
     float punchTimer = 0f;
+    public GameObject swipeManager;
 
     public bool isGrounded;
     public LayerMask groundLayer;
@@ -25,12 +26,14 @@ public class PlayerController : MonoBehaviour
    // public Animator animator;
     private bool isSliding = false;
     bool isFighting = false;
-
+    public GameObject refreshControler;
     [Header("CameraSelection")]
     public GameObject SwimCam;
     public GameObject FightCam;
     [Header("ParticleSystem")]
     public ParticleSystem boomParticleSystem;
+    public ParticleSystem poisonedParticleSystem;
+    public ParticleSystem bloodParticleSystem;
 
 
     void Start()
@@ -44,9 +47,14 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-
+        StartCoroutine(freezeFor3Sec());
         enemyFightModeManager();
         getDirection();
+        if(!isFighting && controlerData)
+        {
+            controller.center = new Vector3(0, 0, 0.34f);
+            controlerData = false;
+        }
     }
     void getDirection()
     {
@@ -71,9 +79,10 @@ public class PlayerController : MonoBehaviour
     }
     void enemyFightModeManager()
     {
-        if (TriggerCollisionDetection.isSnakeAttack || TriggerCollisionDetection.isCrocodileAttack || TriggerCollisionDetection.isHippoAttack)
+        if (TriggerCollisionDetection.isSnakeAttack || TriggerCollisionDetection.isCrocodileAttack || TriggerCollisionDetection.isHippoAttack || TriggerCollisionDetection.isPiranhaDetectPlayer)
         {
             isFighting = true;
+            controlerData = true;
             Debug.Log("True");
         }
         else
@@ -86,11 +95,10 @@ public class PlayerController : MonoBehaviour
             controlSystem();
             anim.SetBool("IsFighting", false);
             forwardSpeed = 3f;
-            controller.center = new Vector3(0, 0, 0);
             SwimCam.SetActive(true);
             FightCam.SetActive(false);
         }
-        if (isFighting && (SnackAttack.snakeHealth > 0 || CrocodileAttack.CrocodileHealth > 0 ||HippoAttack.HippoHealth>0))
+        if (isFighting && (SnackAttack.snakeHealth > 0 || CrocodileAttack.CrocodileHealth > 0 ||HippoAttack.HippoHealth>0 || PiranhaAttack.PiranhasHealth>0))
         {
             forwardSpeed = 0f;
             SwimCam.SetActive(false);
@@ -102,20 +110,25 @@ public class PlayerController : MonoBehaviour
                 SnackAttack.snakeHealth -= 25;
                 CrocodileAttack.CrocodileHealth -= 20;
                 HippoAttack.HippoHealth -= 20;
+                PiranhaAttack.PiranhasHealth -= 50;
                 anim.Play("Punch");
                 StartCoroutine(playBoom());
 
             }
-            if (SnackAttack.playPlayerDamageAnim || CrocodileAttack.playPlayerDamageAnim || HippoAttack.playPlayerDamageAnim)
+            if (SnackAttack.playPlayerDamageAnim || CrocodileAttack.playPlayerDamageAnim || HippoAttack.playPlayerDamageAnim || PiranhaAttack.playPlayerDamageAnim)
             {
                 SnackAttack.playPlayerDamageAnim = false;
                 CrocodileAttack.playPlayerDamageAnim=false;
                 HippoAttack.playPlayerDamageAnim = false;
+                PiranhaAttack.playPlayerDamageAnim = false;
                 StartCoroutine(playGetHit());
+                bloodParticleSystem.Play();
+                PlayerHealth -= 10;
+                Debug.Log("Player Health: " + PlayerHealth);
             }
             punchTimer += Time.deltaTime;
             fightingControlSystem();
-            controller.center = new Vector3(0, +0.70f, 0);
+            controller.center = new Vector3(0, +0.60f, 0.34f);
         }
         if (PlayerHealth <= 0)
         {
@@ -124,11 +137,27 @@ public class PlayerController : MonoBehaviour
             //Destroy(gameObject);
         }
     }
+    //mosquitos attack damage
+    IEnumerator freezeFor3Sec()
+    {
+        if (TriggerCollisionDetection.isCollideWithMosquitos)
+        {
+            swipeManager.SetActive(false);
+            poisonedParticleSystem.Play();
+            PlayerHealth -= 10;
+            TriggerCollisionDetection.isCollideWithMosquitos = false;
+            yield return new WaitForSeconds(3f);
+            swipeManager.SetActive(true);
+
+        }
+    }
+    //particle play
     IEnumerator playBoom()
     {
         yield return new WaitForSeconds(1f);
         boomParticleSystem.Play();
 }
+    //particle play
     IEnumerator playGetHit()
     {
         yield return new WaitForSeconds(1f);
@@ -247,14 +276,6 @@ public class PlayerController : MonoBehaviour
         direction.y = jumpForce;
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(hit.transform.tag == "Obstacle")
-        {
-            PlayerManager.gameOver = true;
-            FindObjectOfType<AudioManager>().PlaySound("GameOver");
-        }
-    }
 
     private IEnumerator Slide()
     {
@@ -262,13 +283,13 @@ public class PlayerController : MonoBehaviour
 
       //  animator.SetBool("isSliding", true);
 
-        controller.center = new Vector3(0, +0.5f, 0);
+        controller.center = new Vector3(0, +0.5f, 0.34f);
         controller.radius = 0.1f;
-        controller.height = 1;
+        controller.height = 0.1f;
 
         yield return new WaitForSeconds(1.3f);
 
-        controller.center = new Vector3(0, 0, 0);
+        controller.center = new Vector3(0, 0, 0.34f);
         controller.radius = 0.5f;
         controller.height = 1;
 

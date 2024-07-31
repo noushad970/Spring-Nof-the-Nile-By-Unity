@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TriggerCollisionDetection : MonoBehaviour
@@ -11,8 +12,9 @@ public class TriggerCollisionDetection : MonoBehaviour
     public static bool isHitArrow = false;
     public static bool isCrocodileAttack = false;
     public static bool isHippoAttack = false;
-    public static bool isMosquitoAttack=false;
+    public static bool isMosquitoAttack=false, isCollideWithMosquitos = false;
     public static bool ableToAttack=false;
+    public static bool isPiranhaDetectPlayer = false, isPiranhaHitWithPlayer = false;
     // This method is called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
     {
@@ -61,18 +63,50 @@ public class TriggerCollisionDetection : MonoBehaviour
         }
         if (other.CompareTag("Player") && this.CompareTag("Hippo"))
         {
-            Debug.Log("Hit With Crocodile");
+          
             isHippoAttack = true;
             ableToAttack=true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Mosquito"))
         {
-            Debug.Log("Hit With Crocodile");
+           
             isMosquitoAttack = true;
         }
-        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") )
+        if (other.CompareTag("Player") && this.CompareTag("AttackingMosquito"))
+        {
+            Debug.Log("Hit With Mosquito");
+            isCollideWithMosquitos = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Piranha"))
+        {
+
+            isPiranhaDetectPlayer = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("AttackingPiranha"))
+        {
+            Debug.Log("Player is Hit with Piranhas");
+            isPiranhaHitWithPlayer = true;
+        }
+
+
+
+        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha" ))
         {
             Destroy(gameObject);
         }
+        if (this.CompareTag("Mosquito"))
+        {
+            StartCoroutine(DesMosquito());
+        }
+        if(this.CompareTag("Piranha") && PiranhaAttack.PiranhasHealth<=0)
+        {
+            isPiranhaHitWithPlayer = false;
+            Destroy(gameObject);
+        }    
+    }
+    IEnumerator DesMosquito()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
     }
 }
