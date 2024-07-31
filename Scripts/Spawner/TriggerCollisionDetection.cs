@@ -5,7 +5,7 @@ public class TriggerCollisionDetection : MonoBehaviour
 {
     public static bool createNewSection=false;
     public static bool destroyPreviousSection=false;
-    public static bool isGetBoatItem=false;
+    public static bool isGetBoatItem=false, isPlayerWithBoat = false;
     public static bool isDestroyBoat=false;
     public static bool isSnakeAttack = false;
     public static bool isVillageShore=false,isHarbourShore=false,isDeepDarkShore=false;
@@ -17,6 +17,9 @@ public class TriggerCollisionDetection : MonoBehaviour
     public static bool isPiranhaDetectPlayer = false, isPiranhaHitWithPlayer = false;
     public static bool isHitFruitItem = false;
     public static bool isHitWithCoin = false;
+    public static bool isSinglePlayer = true, isTreeFalling=false;
+    public static bool GameOver = false;
+    
     // This method is called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
     {
@@ -31,11 +34,16 @@ public class TriggerCollisionDetection : MonoBehaviour
         }
         if (other.CompareTag("Player") && this.CompareTag("Boat"))
         {
+            isPlayerWithBoat = true;
             isGetBoatItem = true;
+            isSinglePlayer = false;
         }
-        if (other.CompareTag("Player") && this.CompareTag("Obstacles"))
+        if (other.CompareTag("Player") && this.CompareTag("Obstacles") && isPlayerWithBoat)
         {
             isDestroyBoat = true;
+            isSinglePlayer=true;
+            isPlayerWithBoat = false;
+
         }
         if (other.CompareTag("Player") && this.CompareTag("VillageShore"))
         {
@@ -94,6 +102,18 @@ public class TriggerCollisionDetection : MonoBehaviour
             Debug.Log("Player is Hit with Fruit");
             isHitFruitItem = true;
         }
+        if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isPlayerWithBoat)
+        {
+            isDestroyBoat = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isSinglePlayer)
+        {
+            GameOver = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("TreeFalling"))
+        {
+            isTreeFalling = true;
+        }
         if (other.CompareTag("Player") && this.CompareTag("Coin"))
         {
             Debug.Log("Player is Hit with Coin");
@@ -102,7 +122,7 @@ public class TriggerCollisionDetection : MonoBehaviour
 
 
 
-        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha" ))
+        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha") && !this.CompareTag("TreeObstacle"))
         {
             Destroy(gameObject);
         }

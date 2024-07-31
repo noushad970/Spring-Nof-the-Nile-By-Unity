@@ -13,7 +13,7 @@ public class InGameManager : MonoBehaviour
     public GameObject upgradeCharParticle;
     public GameObject destroyBoatParticle;
     public GameObject destroyShipParticle;
-
+    public CharacterController controller;
     void Awake()
     {
         OnlyChar.SetActive(true);
@@ -44,15 +44,20 @@ public class InGameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         CharWithBoat.SetActive(true);
         OnlyChar.SetActive(false);
+        controller.center = new Vector3(0f, 0.52f, 0.34f);
+        controller.height = 2.57f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
     IEnumerator DestroyBoat()
     {
         destroyShipParticle.SetActive(true);
+
         yield return new WaitForSeconds(.4f);
         CharWithBoat.SetActive(false);
         OnlyChar.SetActive(true);
+        controller.center = new Vector3(0, 0, 0.34f);
+        controller.height = 1f;
         yield return new WaitForSeconds(1f);
         destroyShipParticle.SetActive(false);
 
