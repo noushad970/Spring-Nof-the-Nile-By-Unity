@@ -38,6 +38,11 @@ public class CrocodileAttack : MonoBehaviour
            TriggerCollisionDetection.ableToAttack = false;
             StartCoroutine(crocoDied());
         }
+        if (TriggerCollisionDetection.isKilledWaterEnemy)
+        {
+            CrocodileHealth = 0;
+            TriggerCollisionDetection.isKilledWaterEnemy = false;
+        }
 
     }
     IEnumerator Attack()
@@ -64,6 +69,7 @@ public class CrocodileAttack : MonoBehaviour
         Anim.Play("Dead");
         yield return new WaitForSeconds(2f);
         TriggerCollisionDetection.isCrocodileAttack = false;
+        CrocodileHealth = 100;
         Destroy(gameObject);
     }
     

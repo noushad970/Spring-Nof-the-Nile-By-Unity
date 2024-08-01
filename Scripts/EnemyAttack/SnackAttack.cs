@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//water enemy must be spawn before the next environment section spawn area;
 //this script will attach with Idle Enemy
 public class SnackAttack : MonoBehaviour
 {
@@ -15,8 +16,7 @@ public class SnackAttack : MonoBehaviour
     public static bool playPlayerDamageAnim=false;
     private void Start()
     {
-        Anim = GetComponent<Animator>();
-       
+        Anim = GetComponent<Animator>();   
     }
     private void Awake()
     {
@@ -54,7 +54,12 @@ public class SnackAttack : MonoBehaviour
             ableToAttack = false;
             StartCoroutine(snakeDied());
         }
-        
+        if (TriggerCollisionDetection.isKilledWaterEnemy)
+        {
+            snakeHealth = 0;
+            TriggerCollisionDetection.isKilledWaterEnemy = false;
+        }
+
     }
     IEnumerator Attack()
     {
@@ -75,6 +80,7 @@ public class SnackAttack : MonoBehaviour
         Anim.Play("SnakeDied");
         yield return new WaitForSeconds(2f);
         TriggerCollisionDetection.isSnakeAttack = false;
+        snakeHealth = 100;
         Destroy(gameObject);
     }
     void moveTowardPlayer()

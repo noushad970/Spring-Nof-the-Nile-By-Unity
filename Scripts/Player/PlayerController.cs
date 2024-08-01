@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem boomParticleSystem;
     public ParticleSystem poisonedTextParticleSystem,poisonedEffectParticleSystem;
     public ParticleSystem bloodParticleSystem;
-    public ParticleSystem hitWithItemParticleSystem;
 
 
 
@@ -55,7 +54,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(freezeFor3Sec());
         enemyFightModeManager();
         getDirection();
-        collectItems();
+       
         //Character controller setting for swimming character
         if (!isFighting && controlerData)
         {
@@ -68,21 +67,7 @@ public class PlayerController : MonoBehaviour
         
         
     }
-    void collectItems()
-    {
-        if (TriggerCollisionDetection.isHitFruitItem)
-        {
-            hitWithItemParticleSystem.Play();
-            TriggerCollisionDetection.isHitFruitItem = false;
-        }
-        if (TriggerCollisionDetection.isHitWithCoin)
-        {
-            hitWithItemParticleSystem.Play();
-            TriggerCollisionDetection.isHitWithCoin = false;
-        }
-        //other
-        
-    }
+    
     void getDirection()
     {
         if (this.gameObject.transform.position.x == 0)
@@ -312,7 +297,7 @@ public class PlayerController : MonoBehaviour
     {
         direction.y = jumpForce;
     }
-
+    
 
     private IEnumerator Slide()
     {

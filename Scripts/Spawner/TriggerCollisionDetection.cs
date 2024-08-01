@@ -15,10 +15,11 @@ public class TriggerCollisionDetection : MonoBehaviour
     public static bool isMosquitoAttack=false, isCollideWithMosquitos = false;
     public static bool ableToAttack=false;
     public static bool isPiranhaDetectPlayer = false, isPiranhaHitWithPlayer = false;
-    public static bool isHitFruitItem = false;
-    public static bool isHitWithCoin = false;
+    public static bool isHitFruitItem = false,isHitBambooItem=false,isHitWoodItem=false;
+    public static bool isHitWithCoin = false,isHitWithGem=false,isHitWithHeart=false;
     public static bool isSinglePlayer = true, isTreeFalling=false;
     public static bool GameOver = false;
+    public static bool isKilledWaterEnemy=false;
     
     // This method is called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
@@ -102,12 +103,33 @@ public class TriggerCollisionDetection : MonoBehaviour
             Debug.Log("Player is Hit with Fruit");
             isHitFruitItem = true;
         }
+        if (other.CompareTag("Player") && this.CompareTag("Bamboo"))
+        {
+            Debug.Log("Player is Hit with Bamboo");
+            isHitBambooItem = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Gem"))
+        {
+            Debug.Log("Player is Hit with Gem");
+            isHitWithGem = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Heart"))
+        {
+            Debug.Log("Player is Hit with Heart");
+            isHitWithHeart = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Wood"))
+        {
+            Debug.Log("Player is Hit with Wood");
+            isHitWoodItem = true;
+        }
         if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isPlayerWithBoat)
         {
             isDestroyBoat = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isSinglePlayer)
         {
+            Debug.Log("GameOver");
             GameOver = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("TreeFalling"))
@@ -119,10 +141,13 @@ public class TriggerCollisionDetection : MonoBehaviour
             Debug.Log("Player is Hit with Coin");
             isHitWithCoin = true;
         }
-
-
-
-        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha") && !this.CompareTag("TreeObstacle"))
+        if((this.CompareTag("PlayerArrow") || this.CompareTag("PlayerMachete")) && (other.CompareTag("SnakeArea") || other.CompareTag("Crocodile") || other.CompareTag("Hippo")))
+        {
+            isKilledWaterEnemy = true;
+            Destroy(gameObject);
+        }
+        
+        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha") && !this.CompareTag("TreeObstacle") && !this.CompareTag("PlayerArrow") && !this.CompareTag("PlayerMachete"))
         {
             Destroy(gameObject);
         }
@@ -134,11 +159,20 @@ public class TriggerCollisionDetection : MonoBehaviour
         {
             isPiranhaHitWithPlayer = false;
             Destroy(gameObject);
-        }    
+        } 
+        if((this.CompareTag("PlayerArrow") || this.CompareTag("PlayerMachete")))
+        {
+            StartCoroutine(DesArrayOrMachete());
+        }
     }
     IEnumerator DesMosquito()
     {
         yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+    }
+    IEnumerator DesArrayOrMachete()
+    {
+        yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
 }

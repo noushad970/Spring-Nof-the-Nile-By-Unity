@@ -37,6 +37,12 @@ public class HippoAttack : MonoBehaviour
             TriggerCollisionDetection.ableToAttack = false;
             StartCoroutine(HippoDied());
         }
+        if (TriggerCollisionDetection.isKilledWaterEnemy)
+        {
+            Debug.Log("Hippo Collide");
+            HippoHealth = 0;
+            TriggerCollisionDetection.isKilledWaterEnemy = false;
+        }
 
     }
     IEnumerator Attack()
@@ -61,6 +67,7 @@ public class HippoAttack : MonoBehaviour
         Anim.Play("Die");
         yield return new WaitForSeconds(5f);
         TriggerCollisionDetection.isHippoAttack = false;
+        HippoHealth = 100;
         Destroy(gameObject);
     }
 

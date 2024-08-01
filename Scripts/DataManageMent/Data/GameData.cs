@@ -12,6 +12,7 @@ public class GameData
     public int bamboo;
     public int fish;
     public int meat;
+    public int life;
     public GameData() {
         this.coin = 0;
         this.woodPlank = 0;
@@ -19,5 +20,6 @@ public class GameData
         this.fish = 0;
         this.meat = 0;
         this.gems = 0;
+        this.life = 0;
     }
 }

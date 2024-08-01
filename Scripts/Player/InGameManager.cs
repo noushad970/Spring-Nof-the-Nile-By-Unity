@@ -9,10 +9,15 @@ public class InGameManager : MonoBehaviour
     public GameObject CharWithBoat;
     //public GameObject CharWithShip;
 
-    [Header("Particle Systems")]
+    [Header("Particle GameObject")]
     public GameObject upgradeCharParticle;
     public GameObject destroyBoatParticle;
     public GameObject destroyShipParticle;
+    [Header("Particle System")]
+    public ParticleSystem hitWithItemParticleSystem;
+    public ParticleSystem hitWithGemParticleSystem;
+    public ParticleSystem hitWithHeartParticle;
+
     public CharacterController controller;
     void Awake()
     {
@@ -23,7 +28,8 @@ public class InGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CharacterAppearenceChange(); 
+        CharacterAppearenceChange();
+        collectItems();
     }
     void CharacterAppearenceChange()
     {
@@ -37,6 +43,42 @@ public class InGameManager : MonoBehaviour
             TriggerCollisionDetection.isDestroyBoat=false;
             StartCoroutine (DestroyBoat());
         }
+    }
+
+    void collectItems()
+    {
+        if (TriggerCollisionDetection.isHitFruitItem)
+        {
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitFruitItem = false;
+        }
+        if (TriggerCollisionDetection.isHitWithCoin)
+        {
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithCoin = false;
+        }
+        if (TriggerCollisionDetection.isHitBambooItem)
+        {
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitBambooItem = false;
+        }
+        if (TriggerCollisionDetection.isHitWoodItem)
+        {
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWoodItem = false;
+        }
+        if (TriggerCollisionDetection.isHitWithGem)
+        {
+            hitWithGemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithGem= false;
+        }
+        if (TriggerCollisionDetection.isHitWithHeart)
+        {
+            hitWithHeartParticle.Play();
+            TriggerCollisionDetection.isHitWithHeart = false;
+        }
+        //other
+
     }
     IEnumerator EnableBoat()
     {
