@@ -8,9 +8,11 @@ public class HippoAttack : MonoBehaviour
     public static int HippoHealth;
     float timer = 4f;
     public static bool playPlayerDamageAnim = false;
+    Collider col;
     private void Start()
     {
         Anim = GetComponent<Animator>();
+        col = GetComponent<Collider>();
 
     }
     private void Awake()
@@ -19,10 +21,7 @@ public class HippoAttack : MonoBehaviour
     }
     private void Update()
     {
-        if (TriggerCollisionDetection.isCrocodileAttack)
-        {
-
-        }
+        
         if (timer >= 4.5f)
         {
 
@@ -37,11 +36,11 @@ public class HippoAttack : MonoBehaviour
             TriggerCollisionDetection.ableToAttack = false;
             StartCoroutine(HippoDied());
         }
-        if (TriggerCollisionDetection.isKilledWaterEnemy)
+        if (TriggerCollisionDetection.isKilledWaterHippo)
         {
-            Debug.Log("Hippo Collide");
             HippoHealth = 0;
-            TriggerCollisionDetection.isKilledWaterEnemy = false;
+            col.enabled = false;
+            TriggerCollisionDetection.isKilledWaterHippo = false;
         }
 
     }

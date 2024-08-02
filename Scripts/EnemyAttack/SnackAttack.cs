@@ -14,9 +14,13 @@ public class SnackAttack : MonoBehaviour
     public static int snakeHealth;
     float timer = 2f;
     public static bool playPlayerDamageAnim=false;
+    Collider col1;
+    Collider col2;
     private void Start()
     {
-        Anim = GetComponent<Animator>();   
+        Anim = GetComponent<Animator>();  
+        col1= GetComponent<Collider>();
+        col2=GetComponentInChildren<Collider>();
     }
     private void Awake()
     {
@@ -53,12 +57,20 @@ public class SnackAttack : MonoBehaviour
         {
             ableToAttack = false;
             StartCoroutine(snakeDied());
-        }
-        if (TriggerCollisionDetection.isKilledWaterEnemy)
+        } 
+        
+        if (TriggerCollisionDetection.isKilledWaterSnake)
         {
             snakeHealth = 0;
-            TriggerCollisionDetection.isKilledWaterEnemy = false;
+            if (gameObject != null)
+            {
+
+                col1.enabled = false;
+                col2.enabled = false;
+            }
+            TriggerCollisionDetection.isKilledWaterSnake = false;
         }
+        
 
     }
     IEnumerator Attack()

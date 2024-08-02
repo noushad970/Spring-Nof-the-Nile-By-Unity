@@ -19,7 +19,7 @@ public class TriggerCollisionDetection : MonoBehaviour
     public static bool isHitWithCoin = false,isHitWithGem=false,isHitWithHeart=false;
     public static bool isSinglePlayer = true, isTreeFalling=false;
     public static bool GameOver = false;
-    public static bool isKilledWaterEnemy=false;
+    public static bool isKilledWaterHippo=false, isKilledWaterSnake=false, isKilledWaterCroco=false;
     
     // This method is called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
@@ -141,13 +141,26 @@ public class TriggerCollisionDetection : MonoBehaviour
             Debug.Log("Player is Hit with Coin");
             isHitWithCoin = true;
         }
-        if((this.CompareTag("PlayerArrow") || this.CompareTag("PlayerMachete")) && (other.CompareTag("SnakeArea") || other.CompareTag("Crocodile") || other.CompareTag("Hippo")))
+
+        //player weapon enemy detection Start;
+        if ((other.CompareTag("Hippo"))  &&  (this.CompareTag("PlayerMachete") || this.CompareTag("PlayerArrow")))
         {
-            isKilledWaterEnemy = true;
+            isKilledWaterHippo = true; 
             Destroy(gameObject);
         }
-        
-        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha") && !this.CompareTag("TreeObstacle") && !this.CompareTag("PlayerArrow") && !this.CompareTag("PlayerMachete"))
+        if (other.CompareTag("Snake") && (this.CompareTag("PlayerMachete") || this.CompareTag("PlayerArrow")))
+        {
+            isKilledWaterSnake = true;
+            Destroy(gameObject);
+        }
+        if ((other.CompareTag("Crocodile")) && (this.CompareTag("PlayerMachete") || this.CompareTag("PlayerArrow")))
+        {
+            isKilledWaterCroco = true;
+            Destroy(gameObject);
+        }
+
+        //player weapon enemy detection end;
+        if (!this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha") && !this.CompareTag("TreeObstacle") && !this.CompareTag("PlayerArrow") && !this.CompareTag("PlayerMachete") && !this.CompareTag("Snake"))
         {
             Destroy(gameObject);
         }

@@ -8,38 +8,48 @@ public class WeaponReleaseSystem : MonoBehaviour
     public GameObject MacheteToSpawn,ArrowToSpawn;
     public Transform spawnPoint; 
     public float speed = 5f;
+    GameObject spawnedObject;
     public Animator animWithBoat, animWithRaft; //animWithNutshelBoat, animWithFishingBoat;
-   // public Button MacheteThrowButton, ArrowThrowButton;
+    public Button MacheteThrowButton, ArrowThrowButton;
     public static bool playerAttackWithMachete = false, playerAttackWithArrow=false;
     void Start()
     {
-       // MacheteThrowButton.onClick.AddListener(attackWithMachete);
-       // ArrowThrowButton.onClick.AddListener(attackWithArrow);
-        attackWithArrow();
+         MacheteThrowButton.onClick.AddListener(attackWithMachete);
+         ArrowThrowButton.onClick.AddListener(attackWithArrow);
+        
         
     }
 
-  
-
-    System.Collections.IEnumerator MoveForward(GameObject obj)
+    private void Update()
     {
-        while (true)
+        if(spawnedObject!=null)
         {
-            obj.transform.rotation= Quaternion.identity;    
-            obj.transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            yield return null;
+
+            MoveForward(spawnedObject);
         }
     }
+    void MoveForward(GameObject gm)
+    {
+        
+
+            gm.transform.rotation = Quaternion.identity;
+            gm.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            
+        
+    }
+
     void attackWithMachete()
     {
-        if (TriggerCollisionDetection.isPlayerWithBoat )
+        if (TriggerCollisionDetection.isPlayerWithBoat || TriggerCollisionDetection.isSinglePlayer)
         {
             if (spawnPoint != null)
             {
                 animWithBoat.Play("Shoot");
-                GameObject spawnedObject = Instantiate(MacheteToSpawn, spawnPoint.position, spawnPoint.rotation);
+                spawnedObject = Instantiate(MacheteToSpawn, spawnPoint.position, spawnPoint.rotation);
                 StartCoroutine(wait25Sec());
-                StartCoroutine(MoveForward(spawnedObject));
+                MoveForward(spawnedObject);
+
+
             }
             else
             {
@@ -56,7 +66,7 @@ public class WeaponReleaseSystem : MonoBehaviour
                 animWithBoat.Play("Arrow");
                 GameObject spawnedObject = Instantiate(ArrowToSpawn, spawnPoint.position, spawnPoint.rotation);
                 StartCoroutine(wait203Sec());
-                StartCoroutine(MoveForward(spawnedObject));
+                MoveForward(spawnedObject);
             }
             else
             {

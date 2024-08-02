@@ -9,9 +9,11 @@ public class CrocodileAttack : MonoBehaviour
     public static int CrocodileHealth;
     float timer = 4f;
     public static bool playPlayerDamageAnim = false;
+    Collider col;
     private void Start()
     {
         Anim = GetComponent<Animator>();
+        col = GetComponent<Collider>();
 
     }
     private void Awake()
@@ -36,13 +38,16 @@ public class CrocodileAttack : MonoBehaviour
         if (CrocodileHealth <= 0)
         {
            TriggerCollisionDetection.ableToAttack = false;
+            col.enabled= false;
             StartCoroutine(crocoDied());
         }
-        if (TriggerCollisionDetection.isKilledWaterEnemy)
+       if (TriggerCollisionDetection.isKilledWaterCroco)
         {
             CrocodileHealth = 0;
-            TriggerCollisionDetection.isKilledWaterEnemy = false;
+            Debug.Log("X");
+            TriggerCollisionDetection.isKilledWaterCroco = false;
         }
+       
 
     }
     IEnumerator Attack()
