@@ -23,14 +23,20 @@ public class DataPersistanceManager : MonoBehaviour
     //saving and loading data while choosing new character or new map
     private void Update()
     {
-      /*  if (GameOver.GameoverSave)
-        {
+        /*  if (GameOver.GameoverSave)
+          {
 
+              saveGame();
+              loadGame();
+              GameOver.GameoverSave = false;
+          }
+          */
+        if (TriggerCollisionDetection.GameOver)
+        {
             saveGame();
             loadGame();
-            GameOver.GameoverSave = false;
+            TriggerCollisionDetection.GameOver = false;
         }
-        */
 
 
     }

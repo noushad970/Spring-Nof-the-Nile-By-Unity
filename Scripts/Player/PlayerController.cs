@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     bool isFighting = false;
     public GameObject refreshControler;
     public GameObject shakeCam;
+    public GameObject jackBody;
     [Header("CameraSelection")]
     public GameObject SwimCam;
     public GameObject FightCam;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem boomParticleSystem;
     public ParticleSystem poisonedTextParticleSystem,poisonedEffectParticleSystem;
     public ParticleSystem bloodParticleSystem;
+    
 
 
 
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(freezeFor3Sec());
         enemyFightModeManager();
         getDirection();
-       
+        jackBody.transform.eulerAngles = new Vector3(0, 0, 0);
         //Character controller setting for swimming character
         if (!isFighting && controlerData)
         {
@@ -147,7 +149,7 @@ public class PlayerController : MonoBehaviour
             playerLostLife = true;
             Debug.Log("PlayerDied");
             TriggerCollisionDetection.GameOver = true;
-            //Destroy(gameObject);
+            
         }
     }
     //mosquitos attack damage
@@ -225,7 +227,7 @@ public class PlayerController : MonoBehaviour
 
         if (controller.isGrounded)
         {
-            if (SwipeManager.swipeUp)
+            if (SwipeManager.swipeUp && TriggerCollisionDetection.isSinglePlayer)
             {
                 direction.y = -1;
                 Jump();
@@ -263,6 +265,7 @@ public class PlayerController : MonoBehaviour
             desiredLane--;
             if (desiredLane == -1)
             {
+               
                 desiredLane = 0;
             }
 
@@ -295,14 +298,26 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        JackAnim.Play("Jump");
         direction.y = jumpForce;
     }
-    
+    IEnumerator slideLeft()
+    {
+        jackBody.transform.eulerAngles= new Vector3 (0, -15, 0);
+        yield return new WaitForSeconds(01f);
+        jackBody.transform.eulerAngles = new Vector3(0, 0, 0);
+    }
+    IEnumerator slideRight()
+    {
+        jackBody.transform.eulerAngles = new Vector3(0, 15, 0);
+        yield return new WaitForSeconds(01f);
+        jackBody.transform.eulerAngles = new Vector3(0, 0, 0);
+    }
 
     private IEnumerator Slide()
     {
         isSliding = true;
-
+        JackAnim.Play("Dive");
         //  animator.SetBool("isSliding", true);
         if (TriggerCollisionDetection.isPlayerWithBoat)
         { 
@@ -343,4 +358,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         shakeCam.SetActive(false);
     }
+
+    
 }

@@ -18,6 +18,12 @@ public class InGameManager : MonoBehaviour
     public ParticleSystem hitWithGemParticleSystem;
     public ParticleSystem hitWithHeartParticle;
 
+    [Header("In game Object Selection System")]
+    public GameObject harpoon;
+    public GameObject machete;
+    public GameObject HandRudder;
+    public GameObject BoatRudder;
+
     public CharacterController controller;
     void Awake()
     {
@@ -30,6 +36,34 @@ public class InGameManager : MonoBehaviour
     {
         CharacterAppearenceChange();
         collectItems();
+        enableAndDissableWeapon();
+    }
+    void enableAndDissableWeapon()
+    {
+        if (WeaponReleaseSystem.playerAttackWithArrow)
+        {
+            harpoon.SetActive(true);
+            BoatRudder.SetActive(true);
+            machete.SetActive(false);
+            HandRudder.SetActive(false);
+
+        }
+        if (WeaponReleaseSystem.playerAttackWithMachete)
+        {
+
+            harpoon.SetActive(false);
+            BoatRudder.SetActive(true);
+            machete.SetActive(true);
+            HandRudder.SetActive(false);
+        }
+        if(!WeaponReleaseSystem.playerAttackWithMachete && !WeaponReleaseSystem.playerAttackWithArrow)
+        {
+
+            harpoon.SetActive(false);
+            BoatRudder.SetActive(false);
+            machete.SetActive(false);
+            HandRudder.SetActive(true);
+        }
     }
     void CharacterAppearenceChange()
     {
@@ -50,32 +84,26 @@ public class InGameManager : MonoBehaviour
         if (TriggerCollisionDetection.isHitFruitItem)
         {
             hitWithItemParticleSystem.Play();
-            TriggerCollisionDetection.isHitFruitItem = false;
         }
         if (TriggerCollisionDetection.isHitWithCoin)
         {
             hitWithItemParticleSystem.Play();
-            TriggerCollisionDetection.isHitWithCoin = false;
         }
         if (TriggerCollisionDetection.isHitBambooItem)
         {
             hitWithItemParticleSystem.Play();
-            TriggerCollisionDetection.isHitBambooItem = false;
         }
         if (TriggerCollisionDetection.isHitWoodItem)
         {
             hitWithItemParticleSystem.Play();
-            TriggerCollisionDetection.isHitWoodItem = false;
         }
         if (TriggerCollisionDetection.isHitWithGem)
         {
             hitWithGemParticleSystem.Play();
-            TriggerCollisionDetection.isHitWithGem= false;
         }
         if (TriggerCollisionDetection.isHitWithHeart)
         {
             hitWithHeartParticle.Play();
-            TriggerCollisionDetection.isHitWithHeart = false;
         }
         //other
 
@@ -86,7 +114,7 @@ public class InGameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         CharWithBoat.SetActive(true);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.52f, 0.34f);
+        controller.center = new Vector3(0f, 0.52f, -0.86f);
         controller.height = 2.57f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);

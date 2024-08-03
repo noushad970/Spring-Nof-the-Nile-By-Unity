@@ -125,6 +125,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         }
         if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isPlayerWithBoat)
         {
+            Debug.Log("Collided with :");
             isDestroyBoat = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isSinglePlayer)
@@ -132,6 +133,7 @@ public class TriggerCollisionDetection : MonoBehaviour
             Debug.Log("GameOver");
             GameOver = true;
         }
+        
         if (other.CompareTag("Player") && this.CompareTag("TreeFalling"))
         {
             isTreeFalling = true;

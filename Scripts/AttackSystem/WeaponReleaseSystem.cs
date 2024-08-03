@@ -12,6 +12,7 @@ public class WeaponReleaseSystem : MonoBehaviour
     public Animator animWithBoat, animWithRaft; //animWithNutshelBoat, animWithFishingBoat;
     public Button MacheteThrowButton, ArrowThrowButton;
     public static bool playerAttackWithMachete = false, playerAttackWithArrow=false;
+    
     void Start()
     {
          MacheteThrowButton.onClick.AddListener(attackWithMachete);
@@ -40,13 +41,14 @@ public class WeaponReleaseSystem : MonoBehaviour
 
     void attackWithMachete()
     {
-        if (TriggerCollisionDetection.isPlayerWithBoat || TriggerCollisionDetection.isSinglePlayer)
+        if (TriggerCollisionDetection.isPlayerWithBoat && !playerAttackWithArrow)
         {
             if (spawnPoint != null)
             {
-                animWithBoat.Play("Shoot");
+                animWithBoat.Play("MeleeThrow");
                 spawnedObject = Instantiate(MacheteToSpawn, spawnPoint.position, spawnPoint.rotation);
                 StartCoroutine(wait25Sec());
+                StartCoroutine(wait7Sec());
                 MoveForward(spawnedObject);
 
 
@@ -59,13 +61,14 @@ public class WeaponReleaseSystem : MonoBehaviour
     }
     void attackWithArrow()
     {
-        if (TriggerCollisionDetection.isPlayerWithBoat || TriggerCollisionDetection.isSinglePlayer)
+        if (TriggerCollisionDetection.isPlayerWithBoat && !playerAttackWithMachete)
         {
             if (spawnPoint != null)
             {
-                animWithBoat.Play("Arrow");
-                GameObject spawnedObject = Instantiate(ArrowToSpawn, spawnPoint.position, spawnPoint.rotation);
+                animWithBoat.Play("Shoot");
+                spawnedObject = Instantiate(ArrowToSpawn, spawnPoint.position, spawnPoint.rotation);
                 StartCoroutine(wait203Sec());
+                StartCoroutine(wait7Sec());
                 MoveForward(spawnedObject);
             }
             else
@@ -77,13 +80,22 @@ public class WeaponReleaseSystem : MonoBehaviour
     IEnumerator wait25Sec()
     {
         playerAttackWithMachete = true;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1f);
         playerAttackWithMachete = false;
     }
     IEnumerator wait203Sec()
     {
         playerAttackWithArrow = true;
-        yield return new WaitForSeconds(2.3f);
+        yield return new WaitForSeconds(2.16f);
         playerAttackWithArrow = false;
+    }
+    IEnumerator wait7Sec()
+    {
+        MacheteThrowButton.enabled = false;
+        ArrowThrowButton.enabled = false;
+        yield return new WaitForSeconds(7f);
+
+        MacheteThrowButton.enabled = true;
+        ArrowThrowButton.enabled = true;
     }
 }
