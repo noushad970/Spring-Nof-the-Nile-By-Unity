@@ -44,7 +44,7 @@ public class SnackAttack : MonoBehaviour
             }    
             moveTowardPlayer();
         }
-        if ( timer>=4.5f)
+        if ( timer>=4.5f && !PlayerController.isPunching)
         {
             
             StartCoroutine(Attack());
@@ -81,7 +81,7 @@ public class SnackAttack : MonoBehaviour
             Anim.Play("Attack");
             playPlayerDamageAnim = true;
             yield return new WaitForSeconds(.5f);
-            PlayerController.PlayerHealth -= 15;
+            PlayerController.PlayerHealth -= 20;
             yield return new WaitForSeconds(4f);
           
         }

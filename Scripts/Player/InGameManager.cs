@@ -6,7 +6,11 @@ public class InGameManager : MonoBehaviour
 {
     [Header("All Player Modes")]
     public GameObject OnlyChar;
-    public GameObject CharWithBoat;
+    public GameObject CharWithRaft;
+    public GameObject CharWithCanoe;
+    public GameObject CharWithNutshell;
+    public GameObject CharWithFishing;
+    public GameObject CharWithShip;
     //public GameObject CharWithShip;
 
     [Header("Particle GameObject")]
@@ -23,12 +27,17 @@ public class InGameManager : MonoBehaviour
     public GameObject machete;
     public GameObject HandRudder;
     public GameObject BoatRudder;
-
+    
     public CharacterController controller;
     void Awake()
     {
         OnlyChar.SetActive(true);
-        CharWithBoat.SetActive(false);
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithShip.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -37,6 +46,7 @@ public class InGameManager : MonoBehaviour
         CharacterAppearenceChange();
         collectItems();
         enableAndDissableWeapon();
+
     }
     void enableAndDissableWeapon()
     {
@@ -67,15 +77,56 @@ public class InGameManager : MonoBehaviour
     }
     void CharacterAppearenceChange()
     {
-        if (TriggerCollisionDetection.isGetBoatItem)
+        if (TriggerCollisionDetection.isGetRaftItem)
         {
-            TriggerCollisionDetection.isGetBoatItem=false;
-            StartCoroutine(EnableBoat());
+            TriggerCollisionDetection.isGetRaftItem=false;
+            StartCoroutine(EnableRaft());
         }
         if (TriggerCollisionDetection.isDestroyBoat)
         {
             TriggerCollisionDetection.isDestroyBoat=false;
-            StartCoroutine (DestroyBoat());
+            StartCoroutine (DestroyRaft());
+        }
+
+        if (TriggerCollisionDetection.isGetCanoeItem)
+        {
+            TriggerCollisionDetection.isGetCanoeItem = false;
+            StartCoroutine(EnableCanoe());
+        }
+        if (TriggerCollisionDetection.isDestroyBoat)
+        {
+            TriggerCollisionDetection.isDestroyBoat = false;
+            StartCoroutine(DestroyCanoe());
+        }
+        if (TriggerCollisionDetection.isGetNutshellBoatItem)
+        {
+            TriggerCollisionDetection.isGetNutshellBoatItem = false;
+            StartCoroutine(EnableNutshell());
+        }
+        if (TriggerCollisionDetection.isDestroyBoat)
+        {
+            TriggerCollisionDetection.isDestroyBoat = false;
+            StartCoroutine(DestroyNutshell());
+        }
+        if (TriggerCollisionDetection.isGetFishingBoatItem)
+        {
+            TriggerCollisionDetection.isGetFishingBoatItem = false;
+            StartCoroutine(EnableFishingBoat());
+        }
+        if (TriggerCollisionDetection.isDestroyBoat)
+        {
+            TriggerCollisionDetection.isDestroyBoat = false;
+            StartCoroutine(DestroyFishingBoat());
+        }
+        if (TriggerCollisionDetection.isGetShipItem)
+        {
+            TriggerCollisionDetection.isGetShipItem = false;
+            StartCoroutine(EnableShip());
+        }
+        if (TriggerCollisionDetection.ShipIsCollideWithObstacle)
+        {
+            TriggerCollisionDetection.ShipIsCollideWithObstacle = false;
+            StartCoroutine(ShipCollideWithOstacle());
         }
     }
 
@@ -84,47 +135,62 @@ public class InGameManager : MonoBehaviour
         if (TriggerCollisionDetection.isHitFruitItem)
         {
             hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitFruitItem=false;
         }
         if (TriggerCollisionDetection.isHitWithCoin)
         {
             hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithCoin = false;
         }
         if (TriggerCollisionDetection.isHitBambooItem)
         {
             hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitBambooItem = false;
         }
         if (TriggerCollisionDetection.isHitWoodItem)
         {
             hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWoodItem=false;
         }
         if (TriggerCollisionDetection.isHitWithGem)
         {
             hitWithGemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithGem=false;
         }
         if (TriggerCollisionDetection.isHitWithHeart)
         {
             hitWithHeartParticle.Play();
+            TriggerCollisionDetection.isHitWithHeart = false;
+
         }
         //other
 
     }
-    IEnumerator EnableBoat()
+    IEnumerator EnableRaft()
     {
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
-        CharWithBoat.SetActive(true);
+        CharWithRaft.SetActive(true);
+        CharWithCanoe.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
         controller.center = new Vector3(0f, 0.52f, -0.86f);
         controller.height = 2.57f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
-    IEnumerator DestroyBoat()
+    IEnumerator DestroyRaft()
     {
         destroyShipParticle.SetActive(true);
 
         yield return new WaitForSeconds(.4f);
-        CharWithBoat.SetActive(false);
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(false);
         OnlyChar.SetActive(true);
         controller.center = new Vector3(0, 0, 0.34f);
         controller.height = 1f;
@@ -132,4 +198,142 @@ public class InGameManager : MonoBehaviour
         destroyShipParticle.SetActive(false);
 
     }
+    IEnumerator EnableCanoe()
+    {
+        upgradeCharParticle.SetActive(true);
+        yield return new WaitForSeconds(1);
+        CharWithCanoe.SetActive(true);
+        CharWithRaft.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(false); OnlyChar.SetActive(false);
+        controller.center = new Vector3(0f, 0.52f, -0.86f);
+        controller.height = 2.57f;
+        yield return new WaitForSeconds(0.2f);
+        upgradeCharParticle.SetActive(false);
+    }
+    IEnumerator DestroyCanoe()
+    {
+        destroyShipParticle.SetActive(true);
+
+        yield return new WaitForSeconds(.4f);
+        CharWithCanoe.SetActive(false);
+        CharWithRaft.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(false);
+        OnlyChar.SetActive(true);
+        controller.center = new Vector3(0, 0, 0.34f);
+        controller.height = 1f;
+        yield return new WaitForSeconds(1f);
+        destroyShipParticle.SetActive(false);
+
+    }
+    IEnumerator EnableNutshell()
+    {
+        upgradeCharParticle.SetActive(true);
+        yield return new WaitForSeconds(1);
+        CharWithNutshell.SetActive(true);
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithShip.SetActive(false);
+        OnlyChar.SetActive(false);
+        controller.center = new Vector3(0f, 0.52f, -0.86f);
+        controller.height = 2.57f;
+        yield return new WaitForSeconds(0.2f);
+        upgradeCharParticle.SetActive(false);
+    }
+    IEnumerator DestroyNutshell()
+    {
+        destroyShipParticle.SetActive(true);
+
+        yield return new WaitForSeconds(.4f);
+        CharWithNutshell.SetActive(false);
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithShip.SetActive(false);
+        OnlyChar.SetActive(true);
+        controller.center = new Vector3(0, 0, 0.34f);
+        controller.height = 1f;
+        yield return new WaitForSeconds(1f);
+        destroyShipParticle.SetActive(false);
+
+    }
+    IEnumerator EnableFishingBoat()
+    {
+        upgradeCharParticle.SetActive(true);
+        yield return new WaitForSeconds(1);
+        CharWithFishing.SetActive(true);
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(false);
+        OnlyChar.SetActive(false);
+        controller.center = new Vector3(0f, 0.52f, -0.86f);
+        controller.height = 2.57f;
+        yield return new WaitForSeconds(0.2f);
+        upgradeCharParticle.SetActive(false);
+    }
+    IEnumerator DestroyFishingBoat()
+    {
+        destroyShipParticle.SetActive(true);
+
+        yield return new WaitForSeconds(.4f);
+
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(false);
+        OnlyChar.SetActive(true);
+        controller.center = new Vector3(0, 0, 0.34f);
+        controller.height = 1f;
+        yield return new WaitForSeconds(1f);
+        destroyShipParticle.SetActive(false);
+
+    }
+    IEnumerator EnableShip()
+    {
+        upgradeCharParticle.SetActive(true);
+        yield return new WaitForSeconds(1);
+        OnlyChar.SetActive(false);
+
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(true);
+        controller.center = new Vector3(0f, 0.52f, -0.86f);
+        controller.height = 2.57f;
+        yield return new WaitForSeconds(0.2f);
+        upgradeCharParticle.SetActive(false);
+    }
+    IEnumerator DestroyShip()
+    {
+        destroyShipParticle.SetActive(true);
+
+        yield return new WaitForSeconds(.4f);
+        CharWithRaft.SetActive(false);
+        CharWithCanoe.SetActive(false);
+        CharWithFishing.SetActive(false);
+        CharWithNutshell.SetActive(false);
+        CharWithShip.SetActive(false);
+
+        OnlyChar.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        destroyShipParticle.SetActive(false);
+
+    }
+    IEnumerator ShipCollideWithOstacle()
+    {
+        destroyShipParticle.SetActive(true);
+
+        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(1f);
+        destroyShipParticle.SetActive(false);
+
+    }
+
 }

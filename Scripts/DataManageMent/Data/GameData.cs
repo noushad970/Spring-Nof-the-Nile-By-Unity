@@ -14,6 +14,8 @@ public class GameData
     public int meat;
     public int life;
     public int  savingWest, seaBag, rope, hammer, bible, safariHat, arrow, machete, fighter, fisherman, net, fishingRod;
+    public bool unlockedSeabag, unlockedCrossBow, unlockedCanoe, unlockedNutshell, unlockedFishingBoat, unlockedShip;
+    public float shipCondition;
     public GameData() {
         this.coin = 0;
         this.woodPlank = 0;
@@ -35,5 +37,12 @@ public class GameData
         this.fisherman = 0;
         this.net = 0;
         this.fishingRod = 0;
+        this.unlockedCanoe = false;
+        this.unlockedNutshell=false;
+        this.unlockedCrossBow = false;
+        this.unlockedSeabag = false;
+        this.unlockedFishingBoat = false;
+        this.unlockedShip = false;
+        this.shipCondition = 100;
     }
 }

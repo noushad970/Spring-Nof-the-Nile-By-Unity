@@ -26,11 +26,11 @@ public class CrocodileAttack : MonoBehaviour
         {
             
         }
-        if (timer >= 4.5f)
+        if (timer >= 4.5f && !PlayerController.isPunching)
         {
             
             StartCoroutine(Attack());
-            //Anim.Play("Attack");
+            
             timer = 0f;
 
         }
@@ -62,7 +62,7 @@ public class CrocodileAttack : MonoBehaviour
                 Anim.Play("Attack2");
             playPlayerDamageAnim = true;
             yield return new WaitForSeconds(1f);
-            PlayerController.PlayerHealth -= 15;
+            PlayerController.PlayerHealth -= 20;
             yield return new WaitForSeconds(3.5f);
            
 

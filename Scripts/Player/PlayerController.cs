@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public Animator JackAnim;
     public Animator JackWithBoatAnim;
     public static int PlayerHealth;
-    public static bool playerLostLife = false,playerleft=false,playerRight=false,playerMiddle=false,controlerData=true;
+    public static bool playerLostLife = false,playerleft=false,playerRight=false,playerMiddle=false,controlerData=true,isPunching=false;
     private int desiredLane = 1; //0:left 1:middle 2:right
     public float laneDistance = 6; //distance between two lanes
     float punchTimer = 0f;
@@ -171,12 +171,14 @@ public class PlayerController : MonoBehaviour
     //particle play
     IEnumerator playBoom()
     {
+        isPunching = true;
         yield return new WaitForSeconds(1f);
         boomParticleSystem.Play();
 
         shakeCam.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         shakeCam.SetActive(false);
+        isPunching=false;
     }
     //particle play
     IEnumerator playGetHit()
@@ -191,7 +193,6 @@ public class PlayerController : MonoBehaviour
     {
        
         controller.Move(direction * Time.fixedDeltaTime);
-        
 
     }
     void fightingControlSystem()
@@ -341,15 +342,15 @@ public class PlayerController : MonoBehaviour
             controller.radius = 0.1f;
             controller.height = 0.1f;
 
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(5f);
 
             controller.center = new Vector3(0, 0, 0.34f);
             controller.radius = 0.5f;
             controller.height = 1;
         }
 
-      //  animator.SetBool("isSliding", false);
-
+        //  animator.SetBool("isSliding", false);
+        yield return new WaitForSeconds(2);
         isSliding = false;
     }
     IEnumerator shakeCamera()

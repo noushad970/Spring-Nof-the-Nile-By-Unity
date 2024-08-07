@@ -5,7 +5,7 @@ public class TriggerCollisionDetection : MonoBehaviour
 {
     public static bool createNewSection=false;
     public static bool destroyPreviousSection=false;
-    public static bool isGetBoatItem=false, isPlayerWithBoat = false;
+    public static bool isGetCanoeItem=false, isGetRaftItem = false, isGetNutshellBoatItem = false, isGetFishingBoatItem = false,isGetShipItem, isPlayerWithBoat = false,playerisWithShip=false,ShipIsCollideWithObstacle=false;
     public static bool isDestroyBoat=false;
     public static bool isSnakeAttack = false;
     public static bool isVillageShore=false,isHarbourShore=false,isDeepDarkShore=false;
@@ -20,7 +20,7 @@ public class TriggerCollisionDetection : MonoBehaviour
     public static bool isSinglePlayer = true, isTreeFalling=false;
     public static bool GameOver = false;
     public static bool isKilledWaterHippo=false, isKilledWaterSnake=false, isKilledWaterCroco=false;
-    
+    public static bool isSaved=false;   
     // This method is called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
     {
@@ -33,17 +33,58 @@ public class TriggerCollisionDetection : MonoBehaviour
         {
             destroyPreviousSection=true;
         }
-        if (other.CompareTag("Player") && this.CompareTag("Boat"))
+        if (other.CompareTag("Player") && this.CompareTag("NutshellBoat"))
         {
             isPlayerWithBoat = true;
-            isGetBoatItem = true;
+            isGetNutshellBoatItem = true;
+            playerisWithShip = false;
             isSinglePlayer = false;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("FishingBoat"))
+        {
+            isPlayerWithBoat = true;
+            isGetFishingBoatItem = true;
+            playerisWithShip = false;
+            isSinglePlayer = false;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Raft"))
+        {
+            isPlayerWithBoat = true;
+            isGetRaftItem = true;
+            playerisWithShip = false;
+            isSinglePlayer = false;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Ship"))
+        {
+            playerisWithShip = true;
+            isPlayerWithBoat = false;
+            isGetShipItem = true;
+            isSinglePlayer = false;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Canoe"))
+        {
+            isPlayerWithBoat = true;
+            playerisWithShip = false;
+            isGetCanoeItem = true;
+            isSinglePlayer = false;
+        }
+        
+        if (other.CompareTag("Player") && this.CompareTag("Obstacles") && playerisWithShip)
+        {
+            ShipIsCollideWithObstacle=true;
+            ScoreCount.shipHealth -= 25;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Obstacles") && playerisWithShip && ScoreCount.shipHealth<0)
+        {
+            isDestroyBoat = true;
+            GameOver = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Obstacles") && isPlayerWithBoat)
         {
             isDestroyBoat = true;
-            isSinglePlayer=true;
+            isSinglePlayer = true;
             isPlayerWithBoat = false;
+
 
         }
         if (other.CompareTag("Player") && this.CompareTag("VillageShore"))

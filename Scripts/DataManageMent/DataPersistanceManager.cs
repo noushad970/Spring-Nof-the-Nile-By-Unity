@@ -37,7 +37,12 @@ public class DataPersistanceManager : MonoBehaviour
             loadGame();
             TriggerCollisionDetection.GameOver = false;
         }
-
+        if(MainMeneManager.itemIsBuyed)
+        {
+            saveGame();
+            loadGame();
+            MainMeneManager.itemIsBuyed = false;
+        }
 
     }
     public static DataPersistanceManager instance
