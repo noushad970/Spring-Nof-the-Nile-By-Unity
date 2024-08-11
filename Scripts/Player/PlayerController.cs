@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     public float forwardSpeed;
     public float maxSpeed;
+    [Header("All Animations")]
     public Animator JackAnim;
-    public Animator JackWithBoatAnim;
+    public Animator JackWithNutshellBoatAnim, JackWithCanoeAnim,jackWithRaftAnim, jackWithFishingBoatAnim;
+    public GameObject singleplayer;
     public static int PlayerHealth;
-    public static bool playerLostLife = false,playerleft=false,playerRight=false,playerMiddle=false,controlerData=true,isPunching=false;
+    public static bool playerSliding=false,playerLostLife = false,playerleft=false,playerRight=false,playerMiddle=false,controlerData=true,isPunching=false;
     private int desiredLane = 1; //0:left 1:middle 2:right
     public float laneDistance = 6; //distance between two lanes
     float punchTimer = 0f;
@@ -26,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
    // public Animator animator;
     private bool isSliding = false;
-    bool isFighting = false;
+    public static bool isFighting = false;
     public GameObject refreshControler;
     public GameObject shakeCam;
     public GameObject jackBody;
@@ -56,14 +58,23 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(freezeFor3Sec());
         enemyFightModeManager();
         getDirection();
+        
         jackBody.transform.eulerAngles = new Vector3(0, 0, 0);
         //Character controller setting for swimming character
         if (!isFighting && controlerData)
         {
-            controller.center = new Vector3(0, 0, 0.34f);
-            controller.height = 1f;
+            //controller.center = new Vector3(0f, 0.75f, -0.74f);
+            //controller.height = 2.1f; 
+
+            controller.center = new Vector3(0f, 0.75f, 0.45f);
+            controller.radius = 0.5f;
+            controller.height = 1;
             controlerData = false;
             
+        }
+        if (PlayerHealth <= 0)
+        {
+            TriggerCollisionDetection.GameOver = true;
         }
         //Character Controller setting For playerWithBoat
         
@@ -93,16 +104,16 @@ public class PlayerController : MonoBehaviour
     }
     void enemyFightModeManager()
     {
-        if (TriggerCollisionDetection.isSnakeAttack || TriggerCollisionDetection.isCrocodileAttack || TriggerCollisionDetection.isHippoAttack || TriggerCollisionDetection.isPiranhaDetectPlayer)
+        if ((TriggerCollisionDetection.isSnakeAttack || TriggerCollisionDetection.isCrocodileAttack || TriggerCollisionDetection.isHippoAttack || TriggerCollisionDetection.isPiranhaDetectPlayer) && TriggerCollisionDetection.isSinglePlayer)
         {
             isFighting = true;
             controlerData = true;
-            Debug.Log("True");
+            
         }
         else
         {
             isFighting = false;
-            Debug.Log("False");
+           
         }
         if (!isFighting)
         {
@@ -174,7 +185,6 @@ public class PlayerController : MonoBehaviour
         isPunching = true;
         yield return new WaitForSeconds(1f);
         boomParticleSystem.Play();
-
         shakeCam.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         shakeCam.SetActive(false);
@@ -318,40 +328,43 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Slide()
     {
         isSliding = true;
-        JackAnim.Play("Dive");
+        playerSliding = true;
         //  animator.SetBool("isSliding", true);
         if (TriggerCollisionDetection.isPlayerWithBoat)
         { 
-            JackWithBoatAnim.Play("Ducking");
+            jackWithFishingBoatAnim.Play("Ducking");
+            jackWithRaftAnim.Play("Ducking"); 
+            JackWithNutshellBoatAnim.Play("Ducking");
+            JackWithCanoeAnim.Play("Ducking"); 
             controller.center = new Vector3(0f, 0.23f, -1.09f);
-            controller.height = 2.2f;
+            controller.height = 1.19f;
             controller.radius = 0.1f;
+            yield return new WaitForSeconds(2f);
 
-            yield return new WaitForSeconds(1.3f);
-
-            controller.center = new Vector3(0f, 0.52f, -1.09f);
-            controller.height = 2.57f;
+            controller.center = new Vector3(0f, 0.75f, -0.74f);
+            controller.height = 2.1f;
             controller.radius = 0.5f;
-          
+            isSliding = false;
         }
         //JackAnim.Play("Ducking");
         //function for simpleCharacter
-        if (TriggerCollisionDetection.isSinglePlayer)
+        else if (TriggerCollisionDetection.isSinglePlayer)
         {
-            controller.center = new Vector3(0, +0.5f, 0.34f);
-            controller.radius = 0.1f;
+            controller.center = new Vector3(0, 1.5f, 0.34f);
+            controller.radius = 0.2f;
             controller.height = 0.1f;
+            JackAnim.Play("Dive");
+            yield return new WaitForSeconds(3f);
 
-            yield return new WaitForSeconds(5f);
-
-            controller.center = new Vector3(0, 0, 0.34f);
+            controller.center = new Vector3(0f, 0.75f, 0.45f);
             controller.radius = 0.5f;
             controller.height = 1;
+            yield return new WaitForSeconds(2);
+            isSliding = false;
         }
 
         //  animator.SetBool("isSliding", false);
-        yield return new WaitForSeconds(2);
-        isSliding = false;
+        
     }
     IEnumerator shakeCamera()
     {

@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class ScoreCount : MonoBehaviour, IDataPersistence
 {
-    public static ScoreCount instance;
     public static int totalCoinsWhenEndRun =0;
     public static int totalFruitWhenEndRun = 0;
     public static int totalGemWhenEndRun = 0;
@@ -19,14 +18,7 @@ public class ScoreCount : MonoBehaviour, IDataPersistence
     [Header("Total Item Player Have")]
     
     public static int bamboo, savingWest, seaBag, rope, hammer, bible, safariHat, arrow, machete, fighter, fisherman, net, fishingRod;
-    private void Awake()
-    {
-        instance = this;
-    }
-    private void Start()
-    {
-    }
-    //game data will load here
+    
     public void loadData(GameData data)
     {
         totalcoins = data.coin;
@@ -117,25 +109,14 @@ public class ScoreCount : MonoBehaviour, IDataPersistence
     //this code will shown the coins and high scores on the main menu screen
     void Update()
     {
-        if (TriggerCollisionDetection.isHitWithCoin)
-        {
-            totalCoinsWhenEndRun++;
-        }
-        if (TriggerCollisionDetection.isHitFruitItem)
-        {
-            totalFruitWhenEndRun++;
-        }
-        if (TriggerCollisionDetection.isHitWithGem)
-        {
-            totalGemWhenEndRun++;
-        }
+        
         if (TriggerCollisionDetection.isHitBambooItem)
         {
-            totalBambooWhenEndRun++;
+            totalBambooWhenEndRun+=1;
         }
         if (TriggerCollisionDetection.isHitWoodItem)
         {
-            totalWoodWhenEndRun++;
+            totalWoodWhenEndRun+=1;
         }
         
     }

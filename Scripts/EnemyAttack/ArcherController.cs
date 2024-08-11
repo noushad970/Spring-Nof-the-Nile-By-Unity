@@ -15,7 +15,7 @@ public class ArcherController : MonoBehaviour
     }
     private void Update()
     {
-        if (!isShooting)
+        if (!isShooting && TriggerCollisionDetection.ArcherStartAttacking)
         {
             
             StartCoroutine(attackArcher());

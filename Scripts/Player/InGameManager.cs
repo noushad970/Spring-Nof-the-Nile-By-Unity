@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class InGameManager : MonoBehaviour
@@ -27,7 +28,10 @@ public class InGameManager : MonoBehaviour
     public GameObject machete;
     public GameObject HandRudder;
     public GameObject BoatRudder;
-    
+
+    [Header("All Items Collection amount")]
+    public TMP_Text coinText;
+    public TMP_Text FruitText, MeatText, FishText, GemText;
     public CharacterController controller;
     void Awake()
     {
@@ -38,6 +42,8 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithShip.SetActive(false);
 
+       
+
     }
 
     // Update is called once per frame
@@ -46,7 +52,20 @@ public class InGameManager : MonoBehaviour
         CharacterAppearenceChange();
         collectItems();
         enableAndDissableWeapon();
+        ItemAmmountShow();
+        if (PlayerController.playerSliding)
+        {
+            StartCoroutine(SlidingOff());
+        }
 
+    }
+    void ItemAmmountShow()
+    {
+        coinText.text = ScoreCount.totalCoinsWhenEndRun.ToString();
+        FruitText.text=ScoreCount.totalFruitWhenEndRun.ToString();
+        FishText.text=ScoreCount.totalFishWhenEndRun.ToString();
+        GemText.text=ScoreCount.totalGemWhenEndRun.ToString();
+        MeatText.text=ScoreCount.totalMeatWhenEndRun.ToString();
     }
     void enableAndDissableWeapon()
     {
@@ -134,11 +153,13 @@ public class InGameManager : MonoBehaviour
     {
         if (TriggerCollisionDetection.isHitFruitItem)
         {
+            ScoreCount.totalFruitWhenEndRun += 1;
             hitWithItemParticleSystem.Play();
             TriggerCollisionDetection.isHitFruitItem=false;
         }
         if (TriggerCollisionDetection.isHitWithCoin)
         {
+            ScoreCount.totalCoinsWhenEndRun += 1;
             hitWithItemParticleSystem.Play();
             TriggerCollisionDetection.isHitWithCoin = false;
         }
@@ -154,6 +175,7 @@ public class InGameManager : MonoBehaviour
         }
         if (TriggerCollisionDetection.isHitWithGem)
         {
+            ScoreCount.totalGemWhenEndRun += 1;
             hitWithGemParticleSystem.Play();
             TriggerCollisionDetection.isHitWithGem=false;
         }
@@ -163,8 +185,16 @@ public class InGameManager : MonoBehaviour
             TriggerCollisionDetection.isHitWithHeart = false;
 
         }
-        //other
+        if (TriggerCollisionDetection.ArcherStartAttacking)
+        {
+            StartCoroutine(archerStopAttack());
+        }
 
+    }
+    IEnumerator archerStopAttack()
+    {
+        yield return new WaitForSeconds(10);
+        TriggerCollisionDetection.ArcherStartAttacking = false;
     }
     IEnumerator EnableRaft()
     {
@@ -176,8 +206,8 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.52f, -0.86f);
-        controller.height = 2.57f;
+        controller.center = new Vector3(0f, 0.6f, 2.07f);
+        controller.height = 2.1f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
@@ -192,7 +222,8 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(true);
-        controller.center = new Vector3(0, 0, 0.34f);
+        controller.center = new Vector3(0, 0.75f, 0.45f);
+        controller.radius = .5f;
         controller.height = 1f;
         yield return new WaitForSeconds(1f);
         destroyShipParticle.SetActive(false);
@@ -207,8 +238,8 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false); OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.52f, -0.86f);
-        controller.height = 2.57f;
+        controller.center = new Vector3(0f, 0.25f, -1.33f);
+        controller.height = 2.1f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
@@ -222,8 +253,9 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
-        OnlyChar.SetActive(true);
-        controller.center = new Vector3(0, 0, 0.34f);
+        OnlyChar.SetActive(true); 
+        controller.center = new Vector3(0, 0.75f, 0.45f);
+        controller.radius = .5f;
         controller.height = 1f;
         yield return new WaitForSeconds(1f);
         destroyShipParticle.SetActive(false);
@@ -239,8 +271,8 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.52f, -0.86f);
-        controller.height = 2.57f;
+        controller.center = new Vector3(0f, 0.75f, -0.74f);
+        controller.height = 2.1f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
@@ -255,7 +287,8 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(true);
-        controller.center = new Vector3(0, 0, 0.34f);
+        controller.center = new Vector3(0, 0.75f, 0.45f);
+        controller.radius = .5f;
         controller.height = 1f;
         yield return new WaitForSeconds(1f);
         destroyShipParticle.SetActive(false);
@@ -271,8 +304,8 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.52f, -0.86f);
-        controller.height = 2.57f;
+        controller.center = new Vector3(0f, 1.29f, 1.87f);
+        controller.height = 2.1f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
@@ -288,7 +321,8 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(true);
-        controller.center = new Vector3(0, 0, 0.34f);
+        controller.center = new Vector3(0, 0.75f, 0.45f);
+        controller.radius = .5f;
         controller.height = 1f;
         yield return new WaitForSeconds(1f);
         destroyShipParticle.SetActive(false);
@@ -335,5 +369,12 @@ public class InGameManager : MonoBehaviour
         destroyShipParticle.SetActive(false);
 
     }
+    IEnumerator SlidingOff()
+    {
+        yield return new WaitForSeconds(2f);
+        PlayerController.playerSliding = false;
+
+    }
+
 
 }

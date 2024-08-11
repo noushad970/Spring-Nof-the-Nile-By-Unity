@@ -33,6 +33,7 @@ public class DataPersistanceManager : MonoBehaviour
           */
         if (TriggerCollisionDetection.GameOver)
         {
+            TriggerCollisionDetection.shipSpawn = 0;
             saveGame();
             loadGame();
             TriggerCollisionDetection.GameOver = false;

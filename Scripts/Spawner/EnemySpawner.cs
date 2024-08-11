@@ -6,12 +6,23 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject snake, crocodileleft, hippoleft, piranhaleft;
     public GameObject  crocodilemiddle, hippomiddle, piranhamiddle;
-    public GameObject crocodileright, hipporight, piranharight;
+    public GameObject crocodileright, hipporight, piranharight,swimLayer;
     
     int randomEnemyNum,randomPosition;
     private void Awake()
     {
         spawnWaterEnemy();
+    }
+    private void Update()
+    {
+        if (PlayerController.isFighting)
+        {
+            swimLayer.SetActive(false);
+        }
+        if (!PlayerController.isFighting)
+        {
+            swimLayer.SetActive(true);
+        }
     }
 
     void spawnWaterEnemy()
