@@ -1581,14 +1581,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7678960012309437029}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14265409, y: -0.033476252, z: 0.98810107, w: 0.04674995}
+  m_LocalRotation: {x: 0.124498695, y: 0.07727092, z: 0.6652212, w: 0.732127}
   m_LocalPosition: {x: -0.00038, y: 0.00111, z: -0.0022}
   m_LocalScale: {x: 0.010179964, y: 0.010179968, z: 0.01017997}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3611659058197340724}
   m_Father: {fileID: 4947454661671362688}
-  m_LocalEulerAnglesHint: {x: 83.97, y: -83.257, z: 105.808}
+  m_LocalEulerAnglesHint: {x: 4.559, y: 16.24, z: 85.168}
 --- !u!1 &7794876820123603612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8294612890851288474}
   - component: {fileID: 3967416787030695107}
+  - component: {fileID: 6123639158151760562}
   m_Layer: 0
   m_Name: FishingVillager
   m_TagString: Untagged
@@ -1614,7 +1615,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7794876820123603612}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.38, y: 0.39916238, z: -0.17}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 0.83333325}
   m_ConstrainProportionsScale: 0
@@ -1623,7 +1624,7 @@ Transform:
   - {fileID: 7419358845830463694}
   - {fileID: 6098677541088075577}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &3967416787030695107
 Animator:
   serializedVersion: 5
@@ -1645,6 +1646,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6123639158151760562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7794876820123603612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d6518f5707ea545bfe041dd1508221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 3967416787030695107}
 --- !u!1 &7905004497257987100
 GameObject:
   m_ObjectHideFlags: 0

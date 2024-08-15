@@ -4,30 +4,38 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
-
-    // Start is called before the first frame update
-    void Start()
+    public static AudioManager instance;
+    public AudioSource oceanEnvironmentSound, riverEnvironmentSound, SinglePlayerSwimSound,jungleSoundFX, BGMusic,waterSoundWithBoat;
+    public AudioSource gemCollide, CoinCollide, DiveIntoWater, enablePowerUp, collideWithObstacle, PlayerDamaged, playerDied, hitItem, shipDestroy, repairSound, throwMachete,getbonusFx,arrowHitSound;
+    public AudioSource CrocAttackFX,punchFX,buttonPressSound,unlockItemFX,BuysomethingFX;
+    private void Awake()
     {
-        foreach (Sound s in sounds)
-        {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-            s.source.loop = s.loop;
-        }
-
-        PlaySound("MainTheme");
+        instance = this;
     }
-
-    public void PlaySound(string name)
+    private void Update()
     {
-        foreach (Sound s in sounds)
-        {
-            if(s.name == name)
-            {
-                s.source.Play();
-            }
-        }
-    }
 
+    }
+    public void singlePlayerAudio()
+    {
+        SinglePlayerSwimSound.Play();
+        waterSoundWithBoat.Stop();
+    }
+    public void PlayerWithBoatAudio()
+    {
+        waterSoundWithBoat.Play();
+        SinglePlayerSwimSound.Stop();
+    }
+    public void oceanShoreAudio()
+    {
+        oceanEnvironmentSound.Play();
+    }
+    public void riverAudio()
+    {
+        riverEnvironmentSound.Play();
+    }
+    public void environmentAudio()
+    {
+        jungleSoundFX.Play();
+    }
 }

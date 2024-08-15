@@ -81,7 +81,7 @@ public class SnackAttack : MonoBehaviour
             Anim.Play("Attack");
             playPlayerDamageAnim = true;
             yield return new WaitForSeconds(.5f);
-            PlayerController.PlayerHealth -= 20;
+            PlayerController.PlayerHealth -= 10;
             yield return new WaitForSeconds(4f);
           
         }
@@ -91,6 +91,7 @@ public class SnackAttack : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Anim.Play("SnakeDied");
         yield return new WaitForSeconds(2f);
+        PlayerController.PlayerHealth = 100;
         TriggerCollisionDetection.isSnakeAttack = false;
         snakeHealth = 100;
         Destroy(gameObject);

@@ -110,14 +110,7 @@ public class ScoreCount : MonoBehaviour, IDataPersistence
     void Update()
     {
         
-        if (TriggerCollisionDetection.isHitBambooItem)
-        {
-            totalBambooWhenEndRun+=1;
-        }
-        if (TriggerCollisionDetection.isHitWoodItem)
-        {
-            totalWoodWhenEndRun+=1;
-        }
+        
         
     }
 }

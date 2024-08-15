@@ -22,17 +22,27 @@ public class InGameManager : MonoBehaviour
     public ParticleSystem hitWithItemParticleSystem;
     public ParticleSystem hitWithGemParticleSystem;
     public ParticleSystem hitWithHeartParticle;
+    public ParticleSystem hitWithFruitParticle;
 
     [Header("In game Object Selection System")]
     public GameObject harpoon;
     public GameObject machete;
     public GameObject HandRudder;
     public GameObject BoatRudder;
+    [Header("All Vehicle Detection")]
+    public static bool isActivateRaft=false;
+    public static bool isActivateCanoe = false;
+    public static bool isActivateNutshel = false;
+    public static bool isActivateFishingBoat = false;
+    public static bool isActivateShip = false;
 
     [Header("All Items Collection amount")]
     public TMP_Text coinText;
     public TMP_Text FruitText, MeatText, FishText, GemText;
     public CharacterController controller;
+    [Header("Light Control")]
+    public GameObject darkLight;
+    public GameObject lightLight;
     void Awake()
     {
         OnlyChar.SetActive(true);
@@ -41,7 +51,11 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithFishing.SetActive(false);
         CharWithShip.SetActive(false);
-
+        isActivateRaft = false;
+        isActivateCanoe = false;
+        isActivateNutshel = false;
+        isActivateFishingBoat = false;
+        isActivateShip = false;
        
 
     }
@@ -57,7 +71,19 @@ public class InGameManager : MonoBehaviour
         {
             StartCoroutine(SlidingOff());
         }
+        if (TriggerCollisionDetection.isDeepDarkShore)
+        {
+            darkLight.SetActive(true);
+            lightLight.SetActive(false);
+        }
+        else
+        {
+            darkLight.SetActive(false);
+            lightLight.SetActive(true);
 
+        }
+        
+        Debug.Log("Controler Center: " + controller.center);
     }
     void ItemAmmountShow()
     {
@@ -99,42 +125,58 @@ public class InGameManager : MonoBehaviour
         if (TriggerCollisionDetection.isGetRaftItem)
         {
             TriggerCollisionDetection.isGetRaftItem=false;
+            TriggerCollisionDetection.isSinglePlayer=false;
+            TriggerCollisionDetection.isPlayerWithBoat = true;
             StartCoroutine(EnableRaft());
         }
         if (TriggerCollisionDetection.isDestroyBoat)
         {
             TriggerCollisionDetection.isDestroyBoat=false;
+            TriggerCollisionDetection.isSinglePlayer = true;
+            TriggerCollisionDetection.isPlayerWithBoat = false;
             StartCoroutine (DestroyRaft());
         }
 
         if (TriggerCollisionDetection.isGetCanoeItem)
         {
             TriggerCollisionDetection.isGetCanoeItem = false;
+            TriggerCollisionDetection.isSinglePlayer = false;
+            TriggerCollisionDetection.isPlayerWithBoat = true;
             StartCoroutine(EnableCanoe());
         }
         if (TriggerCollisionDetection.isDestroyBoat)
         {
             TriggerCollisionDetection.isDestroyBoat = false;
+            TriggerCollisionDetection.isSinglePlayer = true;
+            TriggerCollisionDetection.isPlayerWithBoat = false;
             StartCoroutine(DestroyCanoe());
         }
         if (TriggerCollisionDetection.isGetNutshellBoatItem)
         {
             TriggerCollisionDetection.isGetNutshellBoatItem = false;
+            TriggerCollisionDetection.isSinglePlayer = false;
+            TriggerCollisionDetection.isPlayerWithBoat = true;
             StartCoroutine(EnableNutshell());
         }
         if (TriggerCollisionDetection.isDestroyBoat)
         {
             TriggerCollisionDetection.isDestroyBoat = false;
+            TriggerCollisionDetection.isSinglePlayer = true;
+            TriggerCollisionDetection.isPlayerWithBoat = false;
             StartCoroutine(DestroyNutshell());
         }
         if (TriggerCollisionDetection.isGetFishingBoatItem)
         {
             TriggerCollisionDetection.isGetFishingBoatItem = false;
+            TriggerCollisionDetection.isSinglePlayer = false;
+            TriggerCollisionDetection.isPlayerWithBoat = true;
             StartCoroutine(EnableFishingBoat());
         }
         if (TriggerCollisionDetection.isDestroyBoat)
         {
             TriggerCollisionDetection.isDestroyBoat = false;
+            TriggerCollisionDetection.isSinglePlayer = true;
+            TriggerCollisionDetection.isPlayerWithBoat = false;
             StartCoroutine(DestroyFishingBoat());
         }
         if (TriggerCollisionDetection.isGetShipItem)
@@ -154,7 +196,7 @@ public class InGameManager : MonoBehaviour
         if (TriggerCollisionDetection.isHitFruitItem)
         {
             ScoreCount.totalFruitWhenEndRun += 1;
-            hitWithItemParticleSystem.Play();
+            hitWithFruitParticle.Play();
             TriggerCollisionDetection.isHitFruitItem=false;
         }
         if (TriggerCollisionDetection.isHitWithCoin)
@@ -166,10 +208,12 @@ public class InGameManager : MonoBehaviour
         if (TriggerCollisionDetection.isHitBambooItem)
         {
             hitWithItemParticleSystem.Play();
+            ScoreCount.totalBambooWhenEndRun += 1;
             TriggerCollisionDetection.isHitBambooItem = false;
         }
         if (TriggerCollisionDetection.isHitWoodItem)
         {
+            ScoreCount.totalWoodWhenEndRun += 1;
             hitWithItemParticleSystem.Play();
             TriggerCollisionDetection.isHitWoodItem=false;
         }
@@ -189,6 +233,18 @@ public class InGameManager : MonoBehaviour
         {
             StartCoroutine(archerStopAttack());
         }
+        if (TriggerCollisionDetection.isHitWithMeat)
+        {
+            ScoreCount.totalMeatWhenEndRun += 1;
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithMeat = false;
+        }
+        if (TriggerCollisionDetection.isHitWithFish)
+        {
+            ScoreCount.totalFishWhenEndRun += 1;
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithFish = false;
+        }
 
     }
     IEnumerator archerStopAttack()
@@ -198,6 +254,8 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator EnableRaft()
     {
+        Debug.Log("Enable Raft");
+        isActivateRaft=true;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithRaft.SetActive(true);
@@ -206,13 +264,15 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.6f, 2.07f);
+        controller.center = new Vector3(0f, 0.6f, 1.17f);
+        Debug.Log("Controler Center: " + controller.center);
         controller.height = 2.1f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
     IEnumerator DestroyRaft()
     {
+        isActivateRaft=false;
         destroyShipParticle.SetActive(true);
 
         yield return new WaitForSeconds(.4f);
@@ -231,6 +291,7 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator EnableCanoe()
     {
+        isActivateCanoe=true;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithCanoe.SetActive(true);
@@ -238,15 +299,15 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false); OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.25f, -1.33f);
-        controller.height = 2.1f;
+        controller.center = new Vector3(0f, 0.53f, -1.33f);
+        controller.height = 1.57f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
     IEnumerator DestroyCanoe()
     {
+        isActivateCanoe = false;
         destroyShipParticle.SetActive(true);
-
         yield return new WaitForSeconds(.4f);
         CharWithCanoe.SetActive(false);
         CharWithRaft.SetActive(false);
@@ -263,6 +324,7 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator EnableNutshell()
     {
+        isActivateNutshel = true;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithNutshell.SetActive(true);
@@ -271,13 +333,14 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 0.75f, -0.74f);
-        controller.height = 2.1f;
+        controller.center = new Vector3(0f, 1.07f, -0.74f);
+        controller.height = 1.67f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
     IEnumerator DestroyNutshell()
     {
+        isActivateNutshel= false;
         destroyShipParticle.SetActive(true);
 
         yield return new WaitForSeconds(.4f);
@@ -296,6 +359,7 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator EnableFishingBoat()
     {
+        isActivateFishingBoat = true;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithFishing.SetActive(true);
@@ -304,13 +368,14 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 1.29f, 1.87f);
-        controller.height = 2.1f;
+        controller.center = new Vector3(0f, 1.07f, -0.74f);
+        controller.height = 1.67f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
     IEnumerator DestroyFishingBoat()
     {
+        isActivateFishingBoat= false;
         destroyShipParticle.SetActive(true);
 
         yield return new WaitForSeconds(.4f);
@@ -330,6 +395,7 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator EnableShip()
     {
+        isActivateShip= true;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         OnlyChar.SetActive(false);
@@ -339,13 +405,14 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(true);
-        controller.center = new Vector3(0f, 0.52f, -0.86f);
+        controller.center = new Vector3(0f, 0.52f, 4.55f);
         controller.height = 2.57f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
     IEnumerator DestroyShip()
     {
+        isActivateShip = false;
         destroyShipParticle.SetActive(true);
 
         yield return new WaitForSeconds(.4f);

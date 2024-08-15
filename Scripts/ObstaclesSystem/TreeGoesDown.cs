@@ -26,7 +26,7 @@ public class TreeGoesDown : MonoBehaviour
             // Rotate towards the target rotation over time
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, zRotationSpeed * Time.deltaTime);
 
-            this.transform.position = new Vector3(transform.position.x, 1.7f, transform.position.z);
+            this.transform.position = new Vector3(transform.position.x, 1.7f+ 0.65f, transform.position.z);
             // Stop rotating once the target rotation is reached
             if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
             {

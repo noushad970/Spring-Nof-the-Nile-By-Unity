@@ -36,7 +36,7 @@ public class MainMeneManager : MonoBehaviour
     public Text RopeText;
     public Text HammerText;
     public Text[] fishManTexts, FighterTexts;
-
+    public TMP_Text notificationtext;
     [Header("Game Screen")]
     public GameObject homeScreen;
     public GameObject storeScreen;
@@ -60,6 +60,7 @@ public class MainMeneManager : MonoBehaviour
     public Button indivitualShopButton;
     public Button storeScreenBackButton;
     public Button SellOrTradeStoreButton;
+  
     [Header("Weapon Shop management")]
     public Button NoButton;
     public Button OkButton,Arrow;
@@ -90,10 +91,13 @@ public class MainMeneManager : MonoBehaviour
     public GameObject lockLogoSeabag, lockLogoCrossBow, lockLogoCanoe, lockLogoNutshell, lockLogoFishingBoat, lockLogoShip;
     public GameObject PriceSeabag, PriceCrossBow, PriceCanoe, PriceNutshell, PriceFishingBoat, PriceShip;
 
+    public GameObject notificationBG;
+    
     [Header("Camera movementSystem")]
-    public static bool isHomeScreen=false, isStoreScreen=false,isWeaponscreen = false, isItemScreen = false, isFishScreen = false, isVehicleScreen = false, itemIsBuyed=false;
+    public static bool isHomeScreen=false, isStoreScreen=false,isWeaponscreen = false, isItemScreen = false, isFishScreen = false, isVehicleScreen = false, itemIsBuyed=false,isSaveandLoadData=false;
     private void Start()
     {
+        notificationBG.SetActive(false);
         gotoHomeScreen();
         playButton.onClick.AddListener(playGame);
         storeButton.onClick.AddListener(gotoStore);
@@ -205,10 +209,17 @@ public class MainMeneManager : MonoBehaviour
         yesShipButton.onClick.AddListener(YesUnlockShip);
 
         NoButton.onClick.AddListener(NoButtonPressed);
+        quitButton.onClick.AddListener(quitGame);
     }
     private void Awake()
     {
+
         StartCoroutine(loadingPanelOnOff());
+        isSaveandLoadData=true;
+    }
+    void quitGame()
+    {
+        Application.Quit();
     }
     private void Update()
     {
@@ -315,10 +326,12 @@ public class MainMeneManager : MonoBehaviour
     }
     void playGame()
     {
+        AudioManager.instance.buttonPressSound.Play();
         StartCoroutine(playGameWait());
     }
     void gotoStore()
     {
+        AudioManager.instance.buttonPressSound.Play();
         StoreScreenBackButtonObject.SetActive(true);
         IndivitualShopScreenBackButtonObject.SetActive(false);
         storeScreen.SetActive(true);
@@ -340,6 +353,7 @@ public class MainMeneManager : MonoBehaviour
     void gotoFishShop()
     {
 
+        AudioManager.instance.buttonPressSound.Play();
         StoreScreenBackButtonObject.SetActive(false);
         IndivitualShopScreenBackButtonObject.SetActive(true);
         storeScreen.SetActive(false);
@@ -360,6 +374,7 @@ public class MainMeneManager : MonoBehaviour
     void gotoTradeOrSell()
     {
 
+        AudioManager.instance.buttonPressSound.Play();
         StoreScreenBackButtonObject.SetActive(false);
         IndivitualShopScreenBackButtonObject.SetActive(false);
         storeScreen.SetActive(false);
@@ -380,6 +395,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void gotoWeaponShop()
     {
+        AudioManager.instance.buttonPressSound.Play();
 
         StoreScreenBackButtonObject.SetActive(false);
         IndivitualShopScreenBackButtonObject.SetActive(true);
@@ -400,6 +416,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void gotovehicleShop()
     {
+        AudioManager.instance.buttonPressSound.Play();
         StoreScreenBackButtonObject.SetActive(false);
         IndivitualShopScreenBackButtonObject.SetActive(true);
         storeScreen.SetActive(false);
@@ -419,6 +436,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void gotoItemShop()
     {
+        AudioManager.instance.buttonPressSound.Play();
         StoreScreenBackButtonObject.SetActive(false);
         IndivitualShopScreenBackButtonObject.SetActive(true);
         storeScreen.SetActive(false);
@@ -438,6 +456,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void gotoHomeScreen()
     {
+        AudioManager.instance.buttonPressSound.Play();
         StoreScreenBackButtonObject.SetActive(false);
         IndivitualShopScreenBackButtonObject.SetActive(false);
         homeScreen.SetActive(true);
@@ -463,6 +482,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyArrow()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //arrow price 10 $
         if (ScoreCount.totalcoins >= 10)
         {
@@ -478,6 +498,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyArrowPressed()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalArrowWhenEndRun+=1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -487,6 +509,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuySafari()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //safari price 10 $
         if (ScoreCount.totalcoins >= 10)
         {
@@ -502,6 +525,9 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuySafariPressed()
     {
+
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalSafariWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -511,6 +537,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyFighter()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fighter price 100 $
         if (ScoreCount.totalcoins >= 100)
         {
@@ -526,6 +553,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterPressed()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 100;
         itemIsBuyed = true;
@@ -535,6 +564,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyMachete()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //machete price 10 $
         if (ScoreCount.totalcoins >= 10)
         {
@@ -550,6 +580,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyMachetePressed()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalMacheteWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -559,6 +591,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyWest()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //Saving west price 30 $
         if (ScoreCount.totalcoins >= 30)
         {
@@ -574,6 +607,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyWestPressed()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalSavewestWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 30;
         itemIsBuyed = true;
@@ -583,6 +618,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyfishMan()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalcoins >= 100)
         {
@@ -598,6 +634,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishMan()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 100;
         itemIsBuyed = true;
@@ -607,6 +645,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyRod()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fish rod price  50$
         if (ScoreCount.totalcoins >= 50)
         {
@@ -622,6 +661,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyRod()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalRodWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 50;
         itemIsBuyed = true;
@@ -631,6 +672,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyNet()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //net price 50 $
         if (ScoreCount.totalcoins >= 50)
         {
@@ -646,6 +688,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyNet()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalNetWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 50;
         itemIsBuyed = true;
@@ -655,6 +699,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyBamboo()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //bamboo price 10 $
         if (ScoreCount.totalcoins >= 10)
         {
@@ -670,6 +715,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyBamboo()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalBambooWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -679,6 +726,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyWood()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //wood price 10 $
         if (ScoreCount.totalcoins >= 10)
         {
@@ -694,6 +742,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyWood()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalWoodWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -703,6 +753,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyRope()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //Rope price 10 $
         if (ScoreCount.totalcoins >= 10)
         {
@@ -718,6 +769,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyRope()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalRopeWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -727,6 +780,7 @@ public class MainMeneManager : MonoBehaviour
     } 
     void BuyHammer()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //hammer price 20 $
         if (ScoreCount.totalcoins >= 20)
         {
@@ -742,6 +796,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyHammer()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalHammerWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 20;
         itemIsBuyed = true;
@@ -751,6 +807,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyBible()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //bible price 500 $
         if (ScoreCount.totalcoins >= 500)
         {
@@ -766,6 +823,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyBible()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalBibleWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 500;
         itemIsBuyed = true;
@@ -775,6 +834,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void SellBamboo()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //bamboo price 10 $
         if (ScoreCount.totalBamboo >= 1)
         {
@@ -790,6 +850,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesSellBamboo()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalBambooWhenEndRun -= 1;
         ScoreCount.totalCoinsWhenEndRun += 10;
         itemIsBuyed = true;
@@ -799,6 +861,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void SellBamboo10()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //bamboo price 10 $
         if (ScoreCount.totalBamboo >= 10)
         {
@@ -814,6 +877,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesSellBamboo10()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalBambooWhenEndRun -= 10;
         ScoreCount.totalCoinsWhenEndRun += 150;
         itemIsBuyed = true;
@@ -823,6 +888,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void SellWood()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //wood price 10 $
         if (ScoreCount.totalWood >= 1)
         {
@@ -838,6 +904,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesSellWood()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalWoodWhenEndRun -= 1;
         ScoreCount.totalCoinsWhenEndRun += 10;
         itemIsBuyed = true;
@@ -847,12 +915,13 @@ public class MainMeneManager : MonoBehaviour
     }
     void SellWood10()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //wood price 10 $
         if (ScoreCount.totalWood >= 10)
         {
             confirmationPanel.SetActive(true);
             noButtonObject.SetActive(true);
-            SellWoodconfirmPanel.SetActive(true);
+            SellWoodconfirmPanel10.SetActive(true);
         }
         else
         {
@@ -862,6 +931,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesSellWood10()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalWoodWhenEndRun -= 10;
         ScoreCount.totalCoinsWhenEndRun += 150;
         itemIsBuyed = true;
@@ -871,6 +942,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyfishManWithFish()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalFish >= 10)
         {
@@ -886,6 +958,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithFish()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalFishWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -895,6 +969,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyfishManWithMeat()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalMeat >= 10)
         {
@@ -910,6 +985,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithMeat()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalMeatWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -919,6 +996,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyfishManWithFruit()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalFruits >= 10)
         {
@@ -934,6 +1012,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithFruit()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalFruitWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -944,6 +1024,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyFighterWithFish()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalFish >= 10)
         {
@@ -959,6 +1040,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterWithFish()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
         ScoreCount.totalFishWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -968,6 +1051,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyFighterWithMeat()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalMeat >= 10)
         {
@@ -983,6 +1067,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterWithMeat()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
         ScoreCount.totalMeatWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -992,6 +1078,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyFighterWithFruit()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalFruits >= 10)
         {
@@ -1007,6 +1095,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterWithFruit()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
         ScoreCount.totalFruitWhenEndRun -= 10;
         itemIsBuyed = true;
@@ -1017,6 +1107,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void ExchangeGemWithCoin()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalGem >= 1)
         {
@@ -1032,6 +1123,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesExchangeGemWithCoin()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalCoinsWhenEndRun += 100;
         ScoreCount.totalGemWhenEndRun -= 1;
         itemIsBuyed = true;
@@ -1042,6 +1135,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void BuyfishManWithGem()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalGem >= 1)
         {
@@ -1057,6 +1151,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithGem()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalGemWhenEndRun -= 1;
         itemIsBuyed = true;
@@ -1066,6 +1162,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void ExchangeWestWithBamboo()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalBamboo >= 3)
         {
@@ -1081,6 +1178,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesExchangeWestWithBamboo()
     {
+        AudioManager.instance.BuysomethingFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalSavewestWhenEndRun += 1;
         ScoreCount.totalBambooWhenEndRun -= 3;
         itemIsBuyed = true;
@@ -1091,6 +1190,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void unlockSeabag()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //seabag price 1000 $
         if (ScoreCount.totalcoins >= 1000)
         {
@@ -1106,17 +1206,21 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesUnlockSeabag()
     {
+        AudioManager.instance.unlockItemFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.isUnlockedSeabag = true;
         ScoreCount.totalCoinsWhenEndRun -= 1000;
         itemIsBuyed = true;
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         seaBagConfirmPanel.SetActive(false);
+        StartCoroutine(notification("Congratulation! You have unlocked SeaBag. Now you can collect Unlimited Items!!"));
 
     }
 
     void unlockCrossBow()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //crossbow price 1000 $
         if (ScoreCount.totalcoins >= 1000)
         {
@@ -1132,7 +1236,10 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesUnlockCrossBow()
     {
-        ScoreCount.isUnlockedCrossBow = true;
+        AudioManager.instance.unlockItemFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
+        StartCoroutine(notification("Congratulations! You Have unlocked Crossbow. Now buy arrow to use it"));
+       ScoreCount.isUnlockedCrossBow = true;
         ScoreCount.totalCoinsWhenEndRun -= 1000;
         itemIsBuyed = true;
         confirmationPanel.SetActive(false);
@@ -1142,6 +1249,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void unlockCanoe()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //crossbow price 1000 $
         if (ScoreCount.totalcoins >= 1000)
         {
@@ -1157,6 +1265,9 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesUnlockCanoe()
     {
+        AudioManager.instance.unlockItemFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
+        StartCoroutine(notification("Congratulations! You Have unlocked Canoe. Now you can find Canoe on the water"));
         ScoreCount.isUnlockedCanoe = true;
         ScoreCount.totalCoinsWhenEndRun -= 1000;
         itemIsBuyed = true;
@@ -1167,6 +1278,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void unlockNutshell()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //crossbow price 1000 $
         if (ScoreCount.totalcoins >= 2000)
         {
@@ -1182,6 +1294,9 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesUnlockNutshell()
     {
+        AudioManager.instance.unlockItemFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
+        StartCoroutine(notification("Congratulations! You Have unlocked Nutshell Boat. Now you can find Nutshell Boat on the water"));
         ScoreCount.isUnlockedNutshell = true;
         ScoreCount.totalCoinsWhenEndRun -= 2000;
         itemIsBuyed = true;
@@ -1191,6 +1306,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void unlockFishingBoat()
     {
+        AudioManager.instance.buttonPressSound.Play();
         //crossbow price 1000 $
         if (ScoreCount.totalcoins >= 5000)
         {
@@ -1206,6 +1322,9 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesUnlockFishingBoat()
     {
+        AudioManager.instance.unlockItemFX.Play();
+        AudioManager.instance.buttonPressSound.Play();
+        StartCoroutine(notification("Congratulations! You Have unlocked Fishing Boat. Now you can find Fishing Boat on the water"));
         ScoreCount.isUnlockedFishingBoat = true;
         ScoreCount.totalCoinsWhenEndRun -= 5000;
         itemIsBuyed = true;
@@ -1215,7 +1334,8 @@ public class MainMeneManager : MonoBehaviour
     }
     void unlockShip()
     {
-        //crossbow price 10000 $
+        AudioManager.instance.buttonPressSound.Play();
+        //ship price 10000 $
         if (ScoreCount.totalcoins >= 10000)
         {
             confirmationPanel.SetActive(true);
@@ -1230,6 +1350,9 @@ public class MainMeneManager : MonoBehaviour
     }
     void YesUnlockShip()
     {
+        AudioManager.instance.buttonPressSound.Play();
+        AudioManager.instance.buttonPressSound.Play();
+        StartCoroutine(notification("Congratulations! You Have unlocked Ship & Ocean Environment. Now you can use Ship on the Ocean Environment"));
         ScoreCount.isUnlockedShip = true;
         ScoreCount.totalCoinsWhenEndRun -= 10000;
         itemIsBuyed = true;
@@ -1243,6 +1366,7 @@ public class MainMeneManager : MonoBehaviour
 
     void NoButtonPressed()
     {
+        AudioManager.instance.buttonPressSound.Play();
         noButtonObject.SetActive(false);
         confirmationPanel.SetActive(false);
         arrowConfirmPanel.SetActive(false);
@@ -1277,8 +1401,17 @@ public class MainMeneManager : MonoBehaviour
     void OkButtonPressed()
     {
 
+        AudioManager.instance.buttonPressSound.Play();
         NotEnoughCoinPanel.SetActive(false);
         confirmationPanel.SetActive(false);
+    }
+    IEnumerator notification(string s)
+    {
+        notificationBG.SetActive(true);
+        notificationtext.text = s;
+        yield return new WaitForSeconds(2f);
+        notificationtext.text = "";
+        notificationBG.SetActive(false);
     }
 
 }

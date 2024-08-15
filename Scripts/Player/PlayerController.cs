@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,43 +24,67 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public LayerMask groundLayer;
     public Transform groundCheck;
-
+    public GameObject particleEnvironment;
+    Vector3 particleLocation;
     public float jumpForce;
     public float Gravity = -20;
-
+    public Slider healthSlider;
    // public Animator animator;
     private bool isSliding = false;
     public static bool isFighting = false;
-    public GameObject refreshControler;
+    public GameObject HealthSlider;
     public GameObject shakeCam;
     public GameObject jackBody;
     [Header("CameraSelection")]
     public GameObject SwimCam;
     public GameObject FightCam;
+    public GameObject waterParticle;
     [Header("ParticleSystem")]
     public ParticleSystem boomParticleSystem;
     public ParticleSystem poisonedTextParticleSystem,poisonedEffectParticleSystem;
-    public ParticleSystem bloodParticleSystem;
-    
+    public ParticleSystem bloodParticleSystem,boomblastParticle;
+    bool loadPos;
 
-
+    public GameObject bgMusic;
 
     void Start()
     {
        // JackAnim.SetBool("IsFighting", true);
         controller = GetComponent<CharacterController>();
+        particleLocation = particleEnvironment.transform.position;
+        TriggerCollisionDetection.shipHealth = 100;
+        controller.center = new Vector3(0, 0.75f, 0.45f);
+        controller.radius = .5f;
+        controller.height = 1f;
+        loadPos = true;
     }
     private void Awake()
     {
         PlayerHealth = 100;
         TriggerCollisionDetection.isSinglePlayer = true;
+
+        
     }
     void Update()
     {
         StartCoroutine(freezeFor3Sec());
         enemyFightModeManager();
-        getDirection();
-        
+        getDirection();///
+        if (loadPos)
+        {
+            StartCoroutine(LoadPos());
+        }
+        if (TriggerCollisionDetection.isPlayerWithBoat && !InGameManager.isActivateRaft)
+        {
+            StartCoroutine(wait3Sec());
+        }else if (TriggerCollisionDetection.playerisWithShip)
+        {
+            particleEnvironment.transform.position = new Vector3(particleEnvironment.transform.position.x, 0.4f, particleEnvironment.transform.position.z);
+        }
+        else
+        {
+            particleEnvironment.transform.position = new Vector3(particleEnvironment.transform.position.x, 0, particleEnvironment.transform.position.z);
+        }
         jackBody.transform.eulerAngles = new Vector3(0, 0, 0);
         //Character controller setting for swimming character
         if (!isFighting && controlerData)
@@ -74,13 +100,33 @@ public class PlayerController : MonoBehaviour
         }
         if (PlayerHealth <= 0)
         {
-            TriggerCollisionDetection.GameOver = true;
+            VestManagement.finallyGameOver = true;
         }
+        if (isFighting)
+        {
+            healthSlider.value = PlayerHealth;
+            HealthSlider.SetActive(true);
+        }
+        else HealthSlider.SetActive(false);
         //Character Controller setting For playerWithBoat
-        
+        if (TriggerCollisionDetection.playerisWithShip || TriggerCollisionDetection.isHarbourShore)
+        {
+            laneDistance = 5;
+            bgMusic.SetActive(false);
+        }
+        else
+        {
+            bgMusic.SetActive(true);
+            laneDistance = 3;
+        }
         
     }
-    
+    IEnumerator wait3Sec()
+    {
+        yield return new WaitForSeconds(2f);
+        particleEnvironment.transform.position = new Vector3(particleEnvironment.transform.position.x, .8f, particleEnvironment.transform.position.z);
+
+    }
     void getDirection()
     {
         if (this.gameObject.transform.position.x == 0)
@@ -185,6 +231,7 @@ public class PlayerController : MonoBehaviour
         isPunching = true;
         yield return new WaitForSeconds(1f);
         boomParticleSystem.Play();
+        AudioManager.instance.punchFX.Play();
         shakeCam.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         shakeCam.SetActive(false);
@@ -193,6 +240,7 @@ public class PlayerController : MonoBehaviour
     //particle play
     IEnumerator playGetHit()
     {
+        AudioManager.instance.PlayerDamaged.Play();
         yield return new WaitForSeconds(1.5f);
         JackAnim.Play("GetHit");
         shakeCam.SetActive(true);
@@ -325,6 +373,14 @@ public class PlayerController : MonoBehaviour
         jackBody.transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
+    IEnumerator LoadPos()
+    {
+        controller.center = new Vector3(0, 0.75f, 0.45f);
+        controller.radius = .5f;
+        controller.height = 1f;
+        yield return new WaitForSeconds(.3f);
+        loadPos = false;
+    }
     private IEnumerator Slide()
     {
         isSliding = true;
@@ -336,8 +392,8 @@ public class PlayerController : MonoBehaviour
             jackWithRaftAnim.Play("Ducking"); 
             JackWithNutshellBoatAnim.Play("Ducking");
             JackWithCanoeAnim.Play("Ducking"); 
-            controller.center = new Vector3(0f, 0.23f, -1.09f);
-            controller.height = 1.19f;
+            controller.center = new Vector3(0f, 0.5f, -1.09f);
+            controller.height = 0.81f;
             controller.radius = 0.1f;
             yield return new WaitForSeconds(2f);
 
@@ -350,6 +406,7 @@ public class PlayerController : MonoBehaviour
         //function for simpleCharacter
         else if (TriggerCollisionDetection.isSinglePlayer)
         {
+            AudioManager.instance.DiveIntoWater.Play();
             controller.center = new Vector3(0, 1.5f, 0.34f);
             controller.radius = 0.2f;
             controller.height = 0.1f;
@@ -373,5 +430,19 @@ public class PlayerController : MonoBehaviour
         shakeCam.SetActive(false);
     }
 
-    
+    public IEnumerator gameOver()
+    {
+        controller.enabled = false;
+        waterParticle.SetActive(false);
+        if (TriggerCollisionDetection.isSinglePlayer)
+        {
+            JackAnim.Play("Death");
+        }else if (TriggerCollisionDetection.playerisWithShip)
+        {
+            boomblastParticle.Play();   
+        }
+        yield return new WaitForSeconds(5f);
+        //coin show
+        SceneManager.LoadScene("MenuSystem");
+    }
 }

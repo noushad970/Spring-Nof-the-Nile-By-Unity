@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4774361284282032397}
   - component: {fileID: 5174508371897449765}
-  - component: {fileID: 2284737369556210746}
+  - component: {fileID: 7504749470469418307}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -313,7 +313,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2284737369556210746
+--- !u!114 &7504749470469418307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 905813410772162481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 132cc36df7f0a7e459d538e4ef57ed24, type: 3}
+  m_Script: {fileID: 11500000, guid: 1228c5b6f961d0342bb5a78e2eaef1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   archerArrow: {fileID: 2791924983955110531}
@@ -16865,14 +16865,14 @@ GameObject:
   - component: {fileID: 3991739450162123572}
   - component: {fileID: 3894310493858852367}
   - component: {fileID: 4970169235345372942}
-  - component: {fileID: 5675732661665048329}
+  - component: {fileID: 5935509745448639967}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5810636355482999888
 Transform:
   m_ObjectHideFlags: 0
@@ -16952,8 +16952,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
---- !u!65 &5675732661665048329
-BoxCollider:
+--- !u!143 &5935509745448639967
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -16967,12 +16967,17 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 0.22, z: 0.6694136}
-  m_Center: {x: 0.00000043585908, y: -0.000000004656613, z: -0.33470777}
+  m_Height: 1.69
+  m_Radius: 0.69
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8018476301066010465
 GameObject:
   m_ObjectHideFlags: 0

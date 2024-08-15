@@ -51,10 +51,11 @@ public class HippoAttack : MonoBehaviour
 
             
                 Anim.Play("Attack");
-            
+
             playPlayerDamageAnim = true;
             yield return new WaitForSeconds(1f);
-            PlayerController.PlayerHealth -= 20;
+            AudioManager.instance.CrocAttackFX.Play();
+            PlayerController.PlayerHealth -= 10;
             yield return new WaitForSeconds(3.5f);
 
 
@@ -65,7 +66,9 @@ public class HippoAttack : MonoBehaviour
         yield return new WaitForSeconds(.4f);
         Anim.Play("Die");
         yield return new WaitForSeconds(5f);
+        PlayerController.PlayerHealth = 100;
         TriggerCollisionDetection.isHippoAttack = false;
+        ScoreCount.totalMeatWhenEndRun += Random.Range(1, 4);
         HippoHealth = 100;
         Destroy(gameObject);
     }

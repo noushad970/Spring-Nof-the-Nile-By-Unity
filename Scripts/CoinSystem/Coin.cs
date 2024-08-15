@@ -11,13 +11,4 @@ public class Coin : MonoBehaviour
         transform.Rotate(80* Time.deltaTime, 0,0);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            FindObjectOfType<AudioManager>().PlaySound("PickUpCoin");
-            PlayerManager.numberOfCoins += 1;
-            Destroy(gameObject);
-        }
-    }
 }

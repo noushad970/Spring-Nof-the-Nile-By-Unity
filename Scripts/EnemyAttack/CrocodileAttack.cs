@@ -54,7 +54,8 @@ public class CrocodileAttack : MonoBehaviour
     {
         if (TriggerCollisionDetection.ableToAttack)
         {
-            
+
+            AudioManager.instance.CrocAttackFX.Play();
             int rand = Random.Range(0, 2);
             if (rand == 0)
                 Anim.Play("Attack1");
@@ -62,7 +63,7 @@ public class CrocodileAttack : MonoBehaviour
                 Anim.Play("Attack2");
             playPlayerDamageAnim = true;
             yield return new WaitForSeconds(1f);
-            PlayerController.PlayerHealth -= 20;
+            PlayerController.PlayerHealth -= 10;
             yield return new WaitForSeconds(3.5f);
            
 
@@ -73,8 +74,10 @@ public class CrocodileAttack : MonoBehaviour
         yield return new WaitForSeconds(.4f);
         Anim.Play("Dead");
         yield return new WaitForSeconds(2f);
+        PlayerController.PlayerHealth = 100;
         TriggerCollisionDetection.isCrocodileAttack = false;
         CrocodileHealth = 100;
+        ScoreCount.totalMeatWhenEndRun += Random.Range(1, 4);
         Destroy(gameObject);
     }
     

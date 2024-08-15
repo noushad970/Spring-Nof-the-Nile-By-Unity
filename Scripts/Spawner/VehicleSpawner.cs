@@ -7,7 +7,7 @@ public class VehicleSpawner : MonoBehaviour
     [Header("BoatItemSpawner")]
     public GameObject raft;
     public GameObject canoe, nutshell, fishingBoat, ship;
-    
+    bool loop=false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,8 @@ public class VehicleSpawner : MonoBehaviour
         nutshell.SetActive(false);
         fishingBoat.SetActive(false);
         ship.SetActive(false);
-        vehicleSpawner();
+        loop = false;
+        
         ShipSpawn();
     }
     private void Awake()
@@ -28,7 +29,16 @@ public class VehicleSpawner : MonoBehaviour
     void Update()
     {
         Debug.Log(ScoreCount.isUnlockedCanoe + " : " + ScoreCount.isUnlockedNutshell + " : " + ScoreCount.isUnlockedFishingBoat);
-
+        if (!loop)
+        {
+            StartCoroutine(wait());
+            loop = true;
+        }
+    }
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(.5f);
+        vehicleSpawner();
     }
     void vehicleSpawner()
     {

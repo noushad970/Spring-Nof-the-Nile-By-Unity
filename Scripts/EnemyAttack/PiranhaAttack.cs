@@ -80,10 +80,13 @@ public class PiranhaAttack : MonoBehaviour
     }
     IEnumerator PiranhaDied()
     {
-        piranhacanAttack= false;    
+        
+        piranhacanAttack = false;    
         yield return new WaitForSeconds(2f);
-       
+        PlayerController.PlayerHealth = 100;
         TriggerCollisionDetection.isPiranhaDetectPlayer = false;
+
+        ScoreCount.totalFishWhenEndRun += Random.Range(1, 4);
         Destroy(gameObject);
     }
 }

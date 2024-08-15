@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class DataPersistanceManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class DataPersistanceManager : MonoBehaviour
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
-
+    public PlayerController playerController;
     [System.Obsolete]
     private void Start()
     {
@@ -31,12 +32,23 @@ public class DataPersistanceManager : MonoBehaviour
               GameOver.GameoverSave = false;
           }
           */
-        if (TriggerCollisionDetection.GameOver)
+        if (VestManagement.finallyGameOver)
         {
             TriggerCollisionDetection.shipSpawn = 0;
+            InGameManager.isActivateShip = false;
+            TriggerCollisionDetection.isSinglePlayer = true;
+            TriggerCollisionDetection.isPlayerWithBoat = false;
+            TriggerCollisionDetection.playerisWithShip = false;
+            TriggerCollisionDetection.isDeepDarkShore = false;
+            TriggerCollisionDetection.isHarbourShore = false;
+            VestManagement.finallyGameOver = false;
+            WeaponReleaseSystem.isEnableSafariHat = false;
+            if (playerController != null)
+            {
+                StartCoroutine(playerController.gameOver());
+            }
             saveGame();
             loadGame();
-            TriggerCollisionDetection.GameOver = false;
         }
         if(MainMeneManager.itemIsBuyed)
         {
@@ -44,8 +56,15 @@ public class DataPersistanceManager : MonoBehaviour
             loadGame();
             MainMeneManager.itemIsBuyed = false;
         }
+        if (MainMeneManager.isSaveandLoadData)
+        {
+            saveGame();
+            loadGame();
+            MainMeneManager.isSaveandLoadData = false;
+        }
 
     }
+    
     public static DataPersistanceManager instance
     {
         get;

@@ -14,14 +14,15 @@ public class TriggerCollisionDetection : MonoBehaviour
     public static bool isHippoAttack = false;
     public static bool isMosquitoAttack=false, isCollideWithMosquitos = false;
     public static bool ableToAttack=false;
-    public static bool isPiranhaDetectPlayer = false, isPiranhaHitWithPlayer = false;
-    public static bool isHitFruitItem = false,isHitBambooItem=false,isHitWoodItem=false;
+    public static bool isPiranhaDetectPlayer = false, isPiranhaHitWithPlayer = false,AINinjeDetectEnemy=false;
+    public static bool isHitFruitItem = false,isHitBambooItem=false,isHitWoodItem=false,isHitWithMeat=false,isHitWithFish=false;
     public static bool isHitWithCoin = false,isHitWithGem=false,isHitWithHeart=false;
     public static bool isSinglePlayer = false, isTreeFalling=false;
     public static bool GameOver = false;
     public static bool isKilledWaterHippo=false, isKilledWaterSnake=false, isKilledWaterCroco=false;
     public static bool isSaved=false;
-    public static int shipSpawn = 0;
+    public static int shipSpawn = 0,shipHealth;
+
     // This method is called when another collider enters the trigger collider
     private void OnTriggerEnter(Collider other)
     {
@@ -38,6 +39,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         {
 
             Debug.Log("Collide with NutshellBoat");
+            AudioManager.instance.enablePowerUp.Play();
             isPlayerWithBoat = true;
             isGetNutshellBoatItem = true;
             playerisWithShip = false;
@@ -47,16 +49,28 @@ public class TriggerCollisionDetection : MonoBehaviour
         if (other.CompareTag("Player") && this.CompareTag("FishingBoat"))
         {
             Debug.Log("Collide with FishgingBoat");
+            AudioManager.instance.enablePowerUp.Play();
             isPlayerWithBoat = true;
             isGetFishingBoatItem = true;
             playerisWithShip = false;
             isSinglePlayer = false;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("DetectEnemy"))
+        {
+            AINinjeDetectEnemy = true;
+        }
+        if(other.CompareTag("Arrow")&& (this.CompareTag("Hippo") || this.CompareTag("Crocodile") || this.CompareTag("SnakeEnemy")))
+        {
+            ScoreCount.totalMeatWhenEndRun += Random.Range(1, 5);
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
         }
         if (other.CompareTag("Player") && this.CompareTag("Raft"))
         {
             Debug.Log("Collide with Raft");
             isPlayerWithBoat = true;
             isGetRaftItem = true;
+            AudioManager.instance.enablePowerUp.Play();
             playerisWithShip = false;
             isSinglePlayer = false;
         }
@@ -64,6 +78,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         {
             playerisWithShip = true;
             isPlayerWithBoat = false;
+            AudioManager.instance.enablePowerUp.Play();
             isGetShipItem = true;
             isSinglePlayer = false;
             shipSpawn = 1;
@@ -72,6 +87,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         {
 
             Debug.Log("Collide with Canoe");
+            AudioManager.instance.enablePowerUp.Play();
             isPlayerWithBoat = true;
             playerisWithShip = false;
             isGetCanoeItem = true;
@@ -83,25 +99,34 @@ public class TriggerCollisionDetection : MonoBehaviour
         }
         if(other.CompareTag("Player") && this.CompareTag("Arrow") && !PlayerController.playerSliding)
         {
+            AudioManager.instance.arrowHitSound.Play();
+            AudioManager.instance.PlayerDamaged.Play();
             isCollideWithMosquitos=true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Obstacles") && playerisWithShip)
         {
             ShipIsCollideWithObstacle=true;
-            ScoreCount.shipHealth -= 25;
+            AudioManager.instance.collideWithObstacle.Play();
+            shipHealth -= 25;
+            Destroy(this.gameObject);
         }
-        if (other.CompareTag("Player") && this.CompareTag("Obstacles") && playerisWithShip && ScoreCount.shipHealth<=0)
+        if (other.CompareTag("Player") && this.CompareTag("Obstacles") && playerisWithShip && shipHealth<=0)
         {
-            isDestroyBoat = true;
+            Destroy(this.gameObject);
+            AudioManager.instance.shipDestroy.Play();
+            //isDestroyBoat = true;
             GameOver = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Obstacles") && isPlayerWithBoat)
         {
+            Destroy(gameObject);
+            AudioManager.instance.collideWithObstacle.Play();
             isDestroyBoat = true;
-            isSinglePlayer = true;
-            isPlayerWithBoat = false;
-
-
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Obstacles") && isSinglePlayer)
+        {
+            Destroy(this.gameObject);
+            GameOver = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("VillageShore"))
         {
@@ -124,11 +149,13 @@ public class TriggerCollisionDetection : MonoBehaviour
         {
             Destroy(gameObject);
             isDestroyBoat = true;
+            
         }
         if (other.CompareTag("Player") && this.CompareTag("Hippo") && isPlayerWithBoat)
         {
             Destroy(gameObject);
            isDestroyBoat = true;
+          
         }
         //
         
@@ -150,9 +177,10 @@ public class TriggerCollisionDetection : MonoBehaviour
            
             isMosquitoAttack = true;
         }
-        if (other.CompareTag("Player") && this.CompareTag("AttackingMosquito"))
+        if (other.CompareTag("Player") && this.CompareTag("AttackingMosquito") && !WeaponReleaseSystem.isEnableSafariHat)
         {
             Debug.Log("Hit With Mosquito");
+            AudioManager.instance.PlayerDamaged.Play();
             isCollideWithMosquitos = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Piranha") && isSinglePlayer)
@@ -168,16 +196,19 @@ public class TriggerCollisionDetection : MonoBehaviour
         if (other.CompareTag("Player") && this.CompareTag("Fruit"))
         {
             Debug.Log("Player is Hit with Fruit");
+            AudioManager.instance.hitItem.Play();
             isHitFruitItem = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Bamboo"))
         {
             Debug.Log("Player is Hit with Bamboo");
+            AudioManager.instance.hitItem.Play();
             isHitBambooItem = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Gem"))
         {
             Debug.Log("Player is Hit with Gem");
+            AudioManager.instance.gemCollide.Play();
             isHitWithGem = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Heart"))
@@ -188,17 +219,30 @@ public class TriggerCollisionDetection : MonoBehaviour
         if (other.CompareTag("Player") && this.CompareTag("Wood"))
         {
             Debug.Log("Player is Hit with Wood");
+            AudioManager.instance.hitItem.Play();
             isHitWoodItem = true;
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Fish"))
+        {
+            Debug.Log("Player is Hit with Fish");
+            isHitWithFish = true;/////////////
+        }
+        if (other.CompareTag("Player") && this.CompareTag("Meat"))
+        {
+            Debug.Log("Player is Hit with Meat");
+            isHitWithMeat = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isPlayerWithBoat)
         {
             Debug.Log("Collided with :");
+            AudioManager.instance.collideWithObstacle.Play();
             Destroy(gameObject);
             isDestroyBoat = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("TreeObstacle") && isSinglePlayer)
         {
             Debug.Log("GameOver");
+            Destroy(this.gameObject);
             GameOver = true;
         }
         
@@ -209,26 +253,12 @@ public class TriggerCollisionDetection : MonoBehaviour
         if (other.CompareTag("Player") && this.CompareTag("Coin"))
         {
             Debug.Log("Player is Hit with Coin");
+            AudioManager.instance.CoinCollide.Play();
             isHitWithCoin = true;
         }
         
 
-        //player weapon enemy detection Start;
-        if ((other.CompareTag("Hippo"))  &&  (this.CompareTag("PlayerMachete") || this.CompareTag("PlayerArrow")))
-        {
-            isKilledWaterHippo = true; 
-            Destroy(gameObject);
-        }
-        if (other.CompareTag("Snake") && (this.CompareTag("PlayerMachete") || this.CompareTag("PlayerArrow")))
-        {
-            isKilledWaterSnake = true;
-            Destroy(gameObject);
-        }
-        if ((other.CompareTag("Crocodile")) && (this.CompareTag("PlayerMachete") || this.CompareTag("PlayerArrow")))
-        {
-            isKilledWaterCroco = true;
-            Destroy(gameObject);
-        }
+        
 
         //player weapon enemy detection end;
         if (!this.CompareTag("ArcherStartAttack") && !this.CompareTag("SnakeArea") && !this.CompareTag("Crocodile") && !this.CompareTag("Hippo") && !this.CompareTag("Mosquito") && !this.CompareTag("Piranha") && !this.CompareTag("AttackingPiranha") && !this.CompareTag("TreeObstacle") && !this.CompareTag("PlayerArrow") && !this.CompareTag("PlayerMachete") && !this.CompareTag("Snake"))

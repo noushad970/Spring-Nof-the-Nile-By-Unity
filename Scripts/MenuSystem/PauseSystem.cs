@@ -38,6 +38,7 @@ public class PauseSystem : MonoBehaviour
 
     private void PauseGame()
     {
+        AudioManager.instance.buttonPressSound.Play();
         pauseMenuPanel.SetActive(true);
         confirmationPanelRestart.SetActive(false);
         confirmationPanelMenu.SetActive(false);
@@ -46,12 +47,14 @@ public class PauseSystem : MonoBehaviour
 
     private void ResumeGame()
     {
+        AudioManager.instance.buttonPressSound.Play();
         pauseMenuPanel.SetActive(false);
         Time.timeScale = 1f;  // Resume the game
     }
 
     private void RestartGame()
     {
+        AudioManager.instance.buttonPressSound.Play();
         confirmationPanelRestart.SetActive(true);
         confirmationPanelMenu.SetActive(false);
         pauseMenuPanel.SetActive(false);
@@ -60,6 +63,7 @@ public class PauseSystem : MonoBehaviour
 
     private void QuitGame()
     {
+        AudioManager.instance.buttonPressSound.Play();
         confirmationPanelMenu.SetActive(true);
         confirmationPanelRestart.SetActive(false);
         pauseMenuPanel.SetActive(false);
@@ -68,15 +72,17 @@ public class PauseSystem : MonoBehaviour
 
     private void ConfirmActionMenu()
     {
-        
-            Time.timeScale = 1f;  // Make sure the game is not paused when switching scenes
+        AudioManager.instance.buttonPressSound.Play();
+
+        Time.timeScale = 1f;  // Make sure the game is not paused when switching scenes
             SceneManager.LoadScene("MenuSystem");  // Load the MenuSystem scene (replace with your menu scene name)
         
     }
     private void ConfirmActionRestart()
     {
-        
-            Time.timeScale = 1f;  // Make sure the game is not paused when reloading
+        AudioManager.instance.buttonPressSound.Play();
+
+        Time.timeScale = 1f;  // Make sure the game is not paused when reloading
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);  // Restart the current scene
         
        
