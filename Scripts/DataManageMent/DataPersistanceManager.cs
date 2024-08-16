@@ -36,6 +36,12 @@ public class DataPersistanceManager : MonoBehaviour
         {
             TriggerCollisionDetection.shipSpawn = 0;
             InGameManager.isActivateShip = false;
+            if (TriggerCollisionDetection.isSinglePlayer)
+            {
+                AudioManager.instance.playerDied.Play();
+
+                AudioManager.instance.hitWithWoodFX.Play();
+            }
             TriggerCollisionDetection.isSinglePlayer = true;
             TriggerCollisionDetection.isPlayerWithBoat = false;
             TriggerCollisionDetection.playerisWithShip = false;
@@ -49,6 +55,24 @@ public class DataPersistanceManager : MonoBehaviour
             }
             saveGame();
             loadGame();
+        }
+        if (PauseSystem.gameIsRestarted)
+        {
+            TriggerCollisionDetection.shipSpawn = 0;
+            InGameManager.isActivateShip = false;
+           
+            TriggerCollisionDetection.isSinglePlayer = true;
+            TriggerCollisionDetection.isPlayerWithBoat = false;
+            TriggerCollisionDetection.playerisWithShip = false;
+            TriggerCollisionDetection.isVillageShore = true;
+            TriggerCollisionDetection.isDeepDarkShore = false;
+            TriggerCollisionDetection.isHarbourShore = false;
+           
+            WeaponReleaseSystem.isEnableSafariHat = false;
+         
+            saveGame();
+            loadGame();
+            PauseSystem.gameIsRestarted = false;
         }
         if(MainMeneManager.itemIsBuyed)
         {

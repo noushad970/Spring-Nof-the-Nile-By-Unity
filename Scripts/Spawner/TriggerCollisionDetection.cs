@@ -143,6 +143,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         if (other.CompareTag("Player") && this.CompareTag("SnakeArea") && isSinglePlayer)
         {
             isSnakeAttack = true;
+            AudioManager.instance.PlaySnakeSound.Play();
         }
         
         if (other.CompareTag("Player") && this.CompareTag("Crocodile") && isPlayerWithBoat)
@@ -201,6 +202,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         }
         if (other.CompareTag("Player") && this.CompareTag("Bamboo"))
         {
+            InGameManager.instance.hitWithFruitParticle.Play();
             Debug.Log("Player is Hit with Bamboo");
             AudioManager.instance.hitItem.Play();
             isHitBambooItem = true;
@@ -219,6 +221,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         if (other.CompareTag("Player") && this.CompareTag("Wood"))
         {
             Debug.Log("Player is Hit with Wood");
+            InGameManager.instance.hitWithFruitParticle.Play();
             AudioManager.instance.hitItem.Play();
             isHitWoodItem = true;
         }
@@ -247,7 +250,7 @@ public class TriggerCollisionDetection : MonoBehaviour
         }
         
         if (other.CompareTag("Player") && this.CompareTag("TreeFalling"))
-        {
+        { AudioManager.instance.PlayTreeFallSound.Play();
             isTreeFalling = true;
         }
         if (other.CompareTag("Player") && this.CompareTag("Coin"))

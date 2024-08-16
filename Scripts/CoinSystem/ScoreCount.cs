@@ -15,6 +15,7 @@ public class ScoreCount : MonoBehaviour, IDataPersistence
     public static bool isUnlockedSeabag = false, isUnlockedCrossBow = false, isUnlockedCanoe = false, isUnlockedNutshell = false, isUnlockedFishingBoat = false, isUnlockedShip=false;
     public static int totalcoins, totalFruits, totalGem, totalSaveWest, totalBamboo, totalWood, totalMeat, totalFish;
     public static float shipHealth = 100;
+    public static int totalItems;
     [Header("Total Item Player Have")]
     
     public static int bamboo, savingWest, seaBag, rope, hammer, bible, safariHat, arrow, machete, fighter, fisherman, net, fishingRod;
@@ -103,14 +104,17 @@ public class ScoreCount : MonoBehaviour, IDataPersistence
         data.unlockedSeabag= isUnlockedSeabag ;
         data.shipCondition = shipHealth;
     }
-   
 
+    private void Awake()
+    {
+        totalItems=0;
+    }
     // Update is called once per frame
     //this code will shown the coins and high scores on the main menu screen
     void Update()
     {
-        
-        
+
+        totalItems = totalCoinsWhenEndRun + totalGemWhenEndRun + totalFishWhenEndRun + totalFruitWhenEndRun + totalMeatWhenEndRun + totalBambooWhenEndRun + totalWoodWhenEndRun; 
         
     }
 }

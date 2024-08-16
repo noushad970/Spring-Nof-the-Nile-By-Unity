@@ -51,13 +51,18 @@ public class PauseSystem : MonoBehaviour
         pauseMenuPanel.SetActive(false);
         Time.timeScale = 1f;  // Resume the game
     }
-
+    public static bool gameIsRestarted;
+    private void Awake()
+    {
+        gameIsRestarted = false;
+    }
     private void RestartGame()
     {
         AudioManager.instance.buttonPressSound.Play();
         confirmationPanelRestart.SetActive(true);
         confirmationPanelMenu.SetActive(false);
         pauseMenuPanel.SetActive(false);
+        gameIsRestarted=true;
         //currentAction = Action.Restart;
     }
 

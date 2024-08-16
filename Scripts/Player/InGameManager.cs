@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InGameManager : MonoBehaviour
 {
+    public static InGameManager instance;
     [Header("All Player Modes")]
     public GameObject OnlyChar;
     public GameObject CharWithRaft;
@@ -45,6 +46,7 @@ public class InGameManager : MonoBehaviour
     public GameObject lightLight;
     void Awake()
     {
+        instance = this;
         OnlyChar.SetActive(true);
         CharWithRaft.SetActive(false);
         CharWithCanoe.SetActive(false);
@@ -193,35 +195,66 @@ public class InGameManager : MonoBehaviour
 
     void collectItems()
     {
-        if (TriggerCollisionDetection.isHitFruitItem)
+        if (TriggerCollisionDetection.isHitFruitItem && ScoreCount.isUnlockedSeabag)
         {
             ScoreCount.totalFruitWhenEndRun += 1;
             hitWithFruitParticle.Play();
             TriggerCollisionDetection.isHitFruitItem=false;
         }
-        if (TriggerCollisionDetection.isHitWithCoin)
+        else if(TriggerCollisionDetection.isHitFruitItem && !ScoreCount.isUnlockedSeabag && ScoreCount.totalItems<=100)
+        {
+            ScoreCount.totalFruitWhenEndRun += 1;
+            hitWithFruitParticle.Play();
+            TriggerCollisionDetection.isHitFruitItem = false;
+        }
+        if (TriggerCollisionDetection.isHitWithCoin && ScoreCount.isUnlockedSeabag)
+        {
+            ScoreCount.totalCoinsWhenEndRun += 1;
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithCoin = false;
+        }else if(TriggerCollisionDetection.isHitWithCoin && !ScoreCount.isUnlockedSeabag && ScoreCount.totalItems <= 100)
         {
             ScoreCount.totalCoinsWhenEndRun += 1;
             hitWithItemParticleSystem.Play();
             TriggerCollisionDetection.isHitWithCoin = false;
         }
-        if (TriggerCollisionDetection.isHitBambooItem)
+        else
+        {
+            Debug.Log("Storage Full");
+        }
+        if (TriggerCollisionDetection.isHitBambooItem && ScoreCount.isUnlockedSeabag)
+        {
+            hitWithItemParticleSystem.Play();
+            ScoreCount.totalBambooWhenEndRun += 1;
+            TriggerCollisionDetection.isHitBambooItem = false;
+        }else if (TriggerCollisionDetection.isHitBambooItem && !ScoreCount.isUnlockedSeabag && ScoreCount.totalItems <= 100)
         {
             hitWithItemParticleSystem.Play();
             ScoreCount.totalBambooWhenEndRun += 1;
             TriggerCollisionDetection.isHitBambooItem = false;
         }
-        if (TriggerCollisionDetection.isHitWoodItem)
+        if (TriggerCollisionDetection.isHitWoodItem && ScoreCount.isUnlockedSeabag)
         {
             ScoreCount.totalWoodWhenEndRun += 1;
             hitWithItemParticleSystem.Play();
             TriggerCollisionDetection.isHitWoodItem=false;
+        }else if (TriggerCollisionDetection.isHitWoodItem && !ScoreCount.isUnlockedSeabag && ScoreCount.totalItems <= 100)
+        {
+            ScoreCount.totalWoodWhenEndRun += 1;
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWoodItem = false;
         }
-        if (TriggerCollisionDetection.isHitWithGem)
+        if (TriggerCollisionDetection.isHitWithGem && ScoreCount.isUnlockedSeabag)
         {
             ScoreCount.totalGemWhenEndRun += 1;
             hitWithGemParticleSystem.Play();
             TriggerCollisionDetection.isHitWithGem=false;
+        }
+        else if (TriggerCollisionDetection.isHitWithGem && !ScoreCount.isUnlockedSeabag && ScoreCount.totalItems <= 100)
+        {
+            ScoreCount.totalGemWhenEndRun += 1; 
+            hitWithGemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithGem = false;
         }
         if (TriggerCollisionDetection.isHitWithHeart)
         {
@@ -233,13 +266,23 @@ public class InGameManager : MonoBehaviour
         {
             StartCoroutine(archerStopAttack());
         }
-        if (TriggerCollisionDetection.isHitWithMeat)
+        if (TriggerCollisionDetection.isHitWithMeat && ScoreCount.isUnlockedSeabag)
+        {
+            ScoreCount.totalMeatWhenEndRun += 1;
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithMeat = false;
+        }else if (TriggerCollisionDetection.isHitWithMeat && !ScoreCount.isUnlockedSeabag && ScoreCount.totalItems<=100)
         {
             ScoreCount.totalMeatWhenEndRun += 1;
             hitWithItemParticleSystem.Play();
             TriggerCollisionDetection.isHitWithMeat = false;
         }
-        if (TriggerCollisionDetection.isHitWithFish)
+        if (TriggerCollisionDetection.isHitWithFish && ScoreCount.isUnlockedSeabag)
+        {
+            ScoreCount.totalFishWhenEndRun += 1;
+            hitWithItemParticleSystem.Play();
+            TriggerCollisionDetection.isHitWithFish = false;
+        }else if (TriggerCollisionDetection.isHitWithFish && !ScoreCount.isUnlockedSeabag && ScoreCount.totalItems<=100)
         {
             ScoreCount.totalFishWhenEndRun += 1;
             hitWithItemParticleSystem.Play();
@@ -333,8 +376,8 @@ public class InGameManager : MonoBehaviour
         CharWithFishing.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 1.07f, -0.74f);
-        controller.height = 1.67f;
+        controller.center = new Vector3(0f, 1.57f, -0.74f);
+        controller.height = 2.67f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }
@@ -368,8 +411,8 @@ public class InGameManager : MonoBehaviour
         CharWithNutshell.SetActive(false);
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
-        controller.center = new Vector3(0f, 1.07f, -0.74f);
-        controller.height = 1.67f;
+        controller.center = new Vector3(0f, 1.57f, -0.74f);
+        controller.height = 2.67f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);
     }

@@ -57,7 +57,8 @@ public class VestManagement : MonoBehaviour
         if(!VestIsEnable && TriggerCollisionDetection.GameOver)
         {
             finallyGameOver = true;
-            
+
+            PlayerController.PlayerHealth = 100;
             tikMark.SetActive(false);
             TriggerCollisionDetection.GameOver = false;
         }

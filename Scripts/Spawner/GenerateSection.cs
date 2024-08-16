@@ -17,7 +17,7 @@ public class GenerateSection : MonoBehaviour
     void Start()
     {
         //  StartSection.SetActive(true);
-        randomValue = UnityEngine.Random.Range(1, 2);
+        randomValue = UnityEngine.Random.Range(15, 25);
         totalGeneralSection = 0;
         firstTime=true;
     }
@@ -37,7 +37,7 @@ public class GenerateSection : MonoBehaviour
     void generateSection()
     {
         
-        if (randomValue==totalGeneralSection)
+        if (randomValue==totalGeneralSection && ScoreCount.isUnlockedShip)
         {
             if (firstTime)
             {

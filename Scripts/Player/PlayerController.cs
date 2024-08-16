@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     private CharacterController controller;
     private Vector3 direction;
-    public float forwardSpeed;
+    public float forwardSpeed,previousForwardSpeed;
     public float maxSpeed;
     [Header("All Animations")]
     public Animator JackAnim;
@@ -46,10 +47,13 @@ public class PlayerController : MonoBehaviour
     bool loadPos;
 
     public GameObject bgMusic;
-
+    bool loop,loop2;
     void Start()
     {
-       // JackAnim.SetBool("IsFighting", true);
+        // JackAnim.SetBool("IsFighting", true);
+        previousForwardSpeed = 3;
+        loop = false;
+        loop2 = false;
         controller = GetComponent<CharacterController>();
         particleLocation = particleEnvironment.transform.position;
         TriggerCollisionDetection.shipHealth = 100;
@@ -60,6 +64,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Awake()
     {
+        instance = this;
         PlayerHealth = 100;
         TriggerCollisionDetection.isSinglePlayer = true;
 
@@ -165,12 +170,24 @@ public class PlayerController : MonoBehaviour
         {
             controlSystem();
             JackAnim.SetBool("IsFighting", false);
-            forwardSpeed = 3f;
+            loop= false;
+            if (!loop2)
+            {
+                forwardSpeed = previousForwardSpeed;
+                loop2 = true;
+            }
             SwimCam.SetActive(true);
             FightCam.SetActive(false);
         }
         if (isFighting && (SnackAttack.snakeHealth > 0 || CrocodileAttack.CrocodileHealth > 0 ||HippoAttack.HippoHealth>0 || PiranhaAttack.PiranhasHealth>0))
         {
+            loop2 = false;
+            if (!loop)
+            {
+
+                previousForwardSpeed = forwardSpeed;
+                loop=true;
+            }
             forwardSpeed = 0f;
             SwimCam.SetActive(false);
             FightCam.SetActive(true);
@@ -194,7 +211,7 @@ public class PlayerController : MonoBehaviour
                 PiranhaAttack.playPlayerDamageAnim = false;
                 StartCoroutine(playGetHit());
                 bloodParticleSystem.Play();
-                PlayerHealth -= 10;
+            
                 Debug.Log("Player Health: " + PlayerHealth);
             }
             punchTimer += Time.deltaTime;
@@ -218,9 +235,11 @@ public class PlayerController : MonoBehaviour
             poisonedTextParticleSystem.Play();
             poisonedEffectParticleSystem.Play();
             StartCoroutine(shakeCamera());
-            PlayerHealth -= 10;
+            
             TriggerCollisionDetection.isCollideWithMosquitos = false;
             yield return new WaitForSeconds(3f);
+            
+            
             swipeManager.SetActive(true);
 
         }
@@ -269,13 +288,10 @@ public class PlayerController : MonoBehaviour
     }
     void controlSystem()
     {
-        // if (!PlayerManager.isGameStarted)
-        //   return;
-
-        //Increase speed
+        
         if (forwardSpeed < maxSpeed)
         {
-            forwardSpeed += 0.1f * Time.deltaTime;
+            forwardSpeed += 0.025f * Time.deltaTime;
         }
 
         //animator.SetBool("isGameStarted", true);
@@ -443,6 +459,6 @@ public class PlayerController : MonoBehaviour
         }
         yield return new WaitForSeconds(5f);
         //coin show
-        SceneManager.LoadScene("MenuSystem");
+        SceneManager.LoadScene("SplashScreenMenu");
     }
 }

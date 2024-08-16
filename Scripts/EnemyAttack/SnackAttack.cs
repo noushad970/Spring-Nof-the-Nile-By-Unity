@@ -90,6 +90,8 @@ public class SnackAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Anim.Play("SnakeDied");
+
+        AudioManager.instance.PlaySnakeSound.Stop();
         yield return new WaitForSeconds(2f);
         PlayerController.PlayerHealth = 100;
         TriggerCollisionDetection.isSnakeAttack = false;

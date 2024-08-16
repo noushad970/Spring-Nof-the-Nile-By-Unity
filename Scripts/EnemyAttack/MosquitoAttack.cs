@@ -40,7 +40,9 @@ public class MosquitoAttack : MonoBehaviour
     }
     IEnumerator wait1Sec()
     {
-        yield return new WaitForSeconds(1f);
+        AudioManager.instance.PlayMosquitoFX.Play();
+        yield return new WaitForSeconds(3f);
+        AudioManager.instance.PlayMosquitoFX.Stop();
         TriggerCollisionDetection.isMosquitoAttack = false;
         Destroy(gameObject);
     }

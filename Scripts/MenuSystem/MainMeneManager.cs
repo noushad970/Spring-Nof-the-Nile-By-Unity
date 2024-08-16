@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class MainMeneManager : MonoBehaviour
 {
+    public static MainMeneManager instance;
     [Header("Show all player Item amount")]
     public TMP_Text coinText;
     public TMP_Text gemText;
@@ -39,7 +40,7 @@ public class MainMeneManager : MonoBehaviour
     public TMP_Text notificationtext;
     [Header("Game Screen")]
     public GameObject homeScreen;
-    public GameObject storeScreen;
+    public GameObject storeScreen,howToPlayScreen;
     public GameObject WeaponStoreScreen;
     public GameObject FishStoreScreen;
     public GameObject ItemsStoreScreen;
@@ -60,7 +61,8 @@ public class MainMeneManager : MonoBehaviour
     public Button indivitualShopButton;
     public Button storeScreenBackButton;
     public Button SellOrTradeStoreButton;
-  
+    public Button SettingButton;
+
     [Header("Weapon Shop management")]
     public Button NoButton;
     public Button OkButton,Arrow;
@@ -91,14 +93,18 @@ public class MainMeneManager : MonoBehaviour
     public GameObject lockLogoSeabag, lockLogoCrossBow, lockLogoCanoe, lockLogoNutshell, lockLogoFishingBoat, lockLogoShip;
     public GameObject PriceSeabag, PriceCrossBow, PriceCanoe, PriceNutshell, PriceFishingBoat, PriceShip;
 
-    public GameObject notificationBG;
+    public GameObject notificationBG,settingPanel, settingButtonObject;
     
     [Header("Camera movementSystem")]
     public static bool isHomeScreen=false, isStoreScreen=false,isWeaponscreen = false, isItemScreen = false, isFishScreen = false, isVehicleScreen = false, itemIsBuyed=false,isSaveandLoadData=false;
     private void Start()
     {
         notificationBG.SetActive(false);
+        howToPlayScreen.SetActive(false);
+        StartCoroutine(fixSound());
+       // SettingButton.onClick.AddListener(GotosettingPanel);
         gotoHomeScreen();
+        howToPlayButton.onClick.AddListener(gotoHowToPlayScreen);
         playButton.onClick.AddListener(playGame);
         storeButton.onClick.AddListener(gotoStore);
         weaponStoreButton.onClick.AddListener(gotoWeaponShop);
@@ -109,6 +115,7 @@ public class MainMeneManager : MonoBehaviour
         indivitualShopButton.onClick.AddListener(gotoStore);
         storeScreenBackButton.onClick.AddListener(gotoHomeScreen);
         OkButton.onClick.AddListener(OkButtonPressed);
+        SettingButton.onClick.AddListener(GotosettingPanel);
         //weapon shop
         Arrow.onClick.AddListener(BuyArrow);
         yesArrow.onClick.AddListener(yesBuyArrowPressed);
@@ -213,13 +220,24 @@ public class MainMeneManager : MonoBehaviour
     }
     private void Awake()
     {
-
+        instance= this;
         StartCoroutine(loadingPanelOnOff());
         isSaveandLoadData=true;
+    }
+    void GotosettingPanel()
+    {
+        settingPanel.SetActive(true);
+        settingButtonObject.SetActive(false);
     }
     void quitGame()
     {
         Application.Quit();
+    }
+    IEnumerator fixSound()
+    {
+        settingPanel.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        settingPanel.SetActive(false);
     }
     private void Update()
     {
@@ -317,17 +335,15 @@ public class MainMeneManager : MonoBehaviour
         WoodText2.text = ScoreCount.totalWood.ToString();
     }
     
-    IEnumerator playGameWait()
+    void playGameWait()
     {
-        LoadingPanel.SetActive(true);
-        yield return new WaitForSeconds(3f);
-        LoadingPanel.SetActive(false);
-        SceneManager.LoadScene("GamePlay");
+       
+        SceneManager.LoadScene("SplashScreenGame");
     }
     void playGame()
     {
         AudioManager.instance.buttonPressSound.Play();
-        StartCoroutine(playGameWait());
+       playGameWait();
     }
     void gotoStore()
     {
@@ -341,7 +357,7 @@ public class MainMeneManager : MonoBehaviour
         ItemsStoreScreen.SetActive(false);
         sellOrTradeScreen.SetActive(false);
         VehicleStoreScreen.SetActive(false);
-
+        howToPlayScreen.SetActive(false);
         //bool value
         isWeaponscreen = false;
         isHomeScreen= false;
@@ -414,6 +430,12 @@ public class MainMeneManager : MonoBehaviour
         isVehicleScreen = false;
         isFishScreen = false;
     }
+    void gotoHowToPlayScreen()
+    {
+        howToPlayScreen.SetActive(true);
+        StoreScreenBackButtonObject.SetActive(true);
+        IndivitualShopScreenBackButtonObject.SetActive(false);
+    }
     void gotovehicleShop()
     {
         AudioManager.instance.buttonPressSound.Play();
@@ -456,6 +478,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void gotoHomeScreen()
     {
+        howToPlayScreen.SetActive(false);
         AudioManager.instance.buttonPressSound.Play();
         StoreScreenBackButtonObject.SetActive(false);
         IndivitualShopScreenBackButtonObject.SetActive(false);
@@ -477,7 +500,7 @@ public class MainMeneManager : MonoBehaviour
     IEnumerator loadingPanelOnOff()
     {
         LoadingPanel.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.3f);
         LoadingPanel.SetActive(false);
     }
     void BuyArrow()
@@ -553,6 +576,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterPressed()
     {
+        StartCoroutine(notification("You have buyed 1 Fighter"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
@@ -620,6 +644,7 @@ public class MainMeneManager : MonoBehaviour
     {
         AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
+        StartCoroutine(notification("You have buyed 1 Fisherman"));
         if (ScoreCount.totalcoins >= 100)
         {
             confirmationPanel.SetActive(true);
@@ -958,6 +983,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithFish()
     {
+        StartCoroutine(notification("You have buyed 1 Fisherman"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
@@ -985,6 +1011,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithMeat()
     {
+        StartCoroutine(notification("You have buyed 1 Fisherman"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
@@ -1012,6 +1039,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithFruit()
     {
+        StartCoroutine(notification("You have buyed 1 Fisherman"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
@@ -1040,6 +1068,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterWithFish()
     {
+        StartCoroutine(notification("You have buyed 1 Fisherman"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
@@ -1067,6 +1096,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterWithMeat()
     {
+        StartCoroutine(notification("You have buyed 1 Fighter"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
@@ -1095,6 +1125,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyFighterWithFruit()
     {
+        StartCoroutine(notification("You have buyed 1 Fighter"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFighterWhenEndRun += 1;
@@ -1151,6 +1182,7 @@ public class MainMeneManager : MonoBehaviour
     }
     void yesBuyfishManWithGem()
     {
+        StartCoroutine(notification("You have buyed 1 Fisherman"));
         AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
@@ -1395,6 +1427,12 @@ public class MainMeneManager : MonoBehaviour
         fighterTradeMeatconfirmPanel.SetActive(false);
         westTradeBambooConfirmPanel.SetActive(false);
         gemCoinExchangeConfirmPanel.SetActive(false);
+        canoeConfirmPanel.SetActive(false);
+        NutshelConfirmPanel.SetActive(false);
+        shipConfirmPanel.SetActive(false);
+        fishingBoatConfirmPanel.SetActive(false);
+        CrossBowConfirmPanel.SetActive(false);
+        seaBagConfirmPanel.SetActive(false);
 
     }
     

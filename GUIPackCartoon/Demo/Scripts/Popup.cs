@@ -38,8 +38,8 @@ namespace Ricimi
         private IEnumerator RunPopupDestroy()
         {
             yield return new WaitForSeconds(0.5f);
-            Destroy(m_background);
-            Destroy(gameObject);
+            MainMeneManager.instance.settingButtonObject.SetActive(true);
+            gameObject.SetActive(false);
         }
 
         private void AddBackground()
@@ -68,9 +68,9 @@ namespace Ricimi
 
         private void RemoveBackground()
         {
-            var image = m_background.GetComponent<Image>();
-            if (image != null)
-                image.CrossFadeAlpha(0.0f, 0.2f, false);
+            //var image = m_background.GetComponent<Image>();
+            //if (image != null)
+            //    image.CrossFadeAlpha(0.0f, 0.2f, false);
         }
     }
 }

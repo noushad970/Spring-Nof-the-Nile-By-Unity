@@ -32,7 +32,6 @@ public class WeaponReleaseSystem : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Total Machete: " + totalMachete + " Total Arrow: " + totalArrow);
         if (!loop)
         {
             StartCoroutine(LoadData());
@@ -42,19 +41,19 @@ public class WeaponReleaseSystem : MonoBehaviour
         {
             MoveForward(spawnedObject);
         }
-        if (totalMachete > 0 && TriggerCollisionDetection.isPlayerWithBoat)
+        if (totalMachete > 0 && TriggerCollisionDetection.isPlayerWithBoat )
         {
             MacheteThrowButtonObject.SetActive(true);
         }
-        else if (totalMachete <= 0 || TriggerCollisionDetection.isSinglePlayer)
+        else if (totalMachete <= 0 || TriggerCollisionDetection.isSinglePlayer|| TriggerCollisionDetection.playerisWithShip)
         {
             MacheteThrowButtonObject.SetActive(false);
         }
-        if(totalArrow > 0 && TriggerCollisionDetection.isPlayerWithBoat)
+        if(totalArrow > 0 && TriggerCollisionDetection.isPlayerWithBoat && ScoreCount.isUnlockedCrossBow)
         {
             ArrowThrowButtonObject.SetActive(true);
         }
-        else if(totalMachete <= 0 || TriggerCollisionDetection.isSinglePlayer)
+        else if(totalMachete <= 0 || TriggerCollisionDetection.isSinglePlayer ||TriggerCollisionDetection.playerisWithShip)
         {
             ArrowThrowButtonObject.SetActive(false);
         }
@@ -62,7 +61,7 @@ public class WeaponReleaseSystem : MonoBehaviour
         {
             safariHatButtonObject.SetActive(true);
         }
-        else if(totalSafari <= 0)
+        else
         {
             safariHatButtonObject.SetActive(false);
         }
@@ -159,6 +158,7 @@ public class WeaponReleaseSystem : MonoBehaviour
     {
         if (!safariClicked)
         {
+            AudioManager.instance.enablePowerUp.Play();
             totalSafari -= 1;
             ScoreCount.totalSafariWhenEndRun -= 1;
             enablePowerUpParticleSystem.Play();
