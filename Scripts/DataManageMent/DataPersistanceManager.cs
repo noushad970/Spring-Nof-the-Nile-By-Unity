@@ -116,7 +116,6 @@ public class DataPersistanceManager : MonoBehaviour
         {
             persistence.saveData(ref gameData);
         }
-        Debug.Log("save Total coins: " + gameData.coin);
         dataHandler.Save(gameData);
     }
     //load the game data
@@ -125,14 +124,12 @@ public class DataPersistanceManager : MonoBehaviour
         this.gameData = dataHandler.Load();
         if (this.gameData == null)
         {
-            Debug.Log("No game data was found,initializing data to new Game Data");
             newGame();
         }
         foreach (IDataPersistence persistence in dataPersistenceObjects)
         {
             persistence.loadData(gameData);
         }
-        Debug.Log("Load Total coins: " + gameData.coin);
 
     }
     //save the game data while exiting the app

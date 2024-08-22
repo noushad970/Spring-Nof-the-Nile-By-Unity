@@ -85,7 +85,6 @@ public class InGameManager : MonoBehaviour
 
         }
         
-        Debug.Log("Controler Center: " + controller.center);
     }
     void ItemAmmountShow()
     {
@@ -297,7 +296,6 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator EnableRaft()
     {
-        Debug.Log("Enable Raft");
         isActivateRaft=true;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
@@ -308,7 +306,6 @@ public class InGameManager : MonoBehaviour
         CharWithShip.SetActive(false);
         OnlyChar.SetActive(false);
         controller.center = new Vector3(0f, 0.6f, 1.17f);
-        Debug.Log("Controler Center: " + controller.center);
         controller.height = 2.1f;
         yield return new WaitForSeconds(0.2f);
         upgradeCharParticle.SetActive(false);

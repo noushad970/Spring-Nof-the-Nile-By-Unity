@@ -50,8 +50,6 @@ public class ScoreCount : MonoBehaviour, IDataPersistence
         isUnlockedNutshell = data.unlockedNutshell;
         isUnlockedSeabag = data.unlockedSeabag;
         shipHealth = data.shipCondition;
-        Debug.Log("Coin when Load:X" + totalcoins);
-        Debug.Log("Coin when Load:" + data.coin);
 
     }
     //game data will save here

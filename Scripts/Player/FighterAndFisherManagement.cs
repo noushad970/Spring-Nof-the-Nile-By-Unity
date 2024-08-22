@@ -83,7 +83,6 @@ public class FighterAndFisherManagement : MonoBehaviour
         tabAmountfish += 1;
         ScoreCount.totalFishManWhenEndRun -= 1;
         totFishMan -= 1;
-        Debug.Log("AddAIFishMan1");
         RaftAIFishMan1.SetActive(true);
         CanoeAIFishMan1.SetActive(true);
         NutshellAIFishMan1.SetActive(true);
@@ -94,7 +93,6 @@ public class FighterAndFisherManagement : MonoBehaviour
     }
     void AddAIFishMan2()
     {
-        Debug.Log("AddAIFishMan2");
         tabAmountfish += 1;
         ScoreCount.totalFishManWhenEndRun -= 1;
         totFishMan -= 1;
@@ -109,7 +107,6 @@ public class FighterAndFisherManagement : MonoBehaviour
     void AddAINinja1()
     {
 
-        Debug.Log("AddAINinja1");
         tabAmountninja += 1;
         ScoreCount.totalFighterWhenEndRun -= 1;
         totninja -= 1;
@@ -121,7 +118,6 @@ public class FighterAndFisherManagement : MonoBehaviour
     }
     void AddAINinja2()
     {
-        Debug.Log("AddAINinja2");
         tabAmountninja += 1;
         ScoreCount.totalFighterWhenEndRun -= 1;
         totninja -= 1;

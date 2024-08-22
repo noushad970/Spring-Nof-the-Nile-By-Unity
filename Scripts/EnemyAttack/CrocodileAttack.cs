@@ -44,7 +44,7 @@ public class CrocodileAttack : MonoBehaviour
        if (TriggerCollisionDetection.isKilledWaterCroco)
         {
             CrocodileHealth = 0;
-            Debug.Log("X");
+          
             TriggerCollisionDetection.isKilledWaterCroco = false;
         }
        

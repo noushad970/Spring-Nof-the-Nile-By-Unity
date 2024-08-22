@@ -212,7 +212,6 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(playGetHit());
                 bloodParticleSystem.Play();
             
-                Debug.Log("Player Health: " + PlayerHealth);
             }
             punchTimer += Time.deltaTime;
             fightingControlSystem();
@@ -221,7 +220,6 @@ public class PlayerController : MonoBehaviour
         if (PlayerHealth <= 0)
         {
             playerLostLife = true;
-            Debug.Log("PlayerDied");
             TriggerCollisionDetection.GameOver = true;
             
         }
@@ -291,11 +289,8 @@ public class PlayerController : MonoBehaviour
         
         if (forwardSpeed < maxSpeed)
         {
-            forwardSpeed += 0.025f * Time.deltaTime;
+            forwardSpeed += 0.05f * Time.deltaTime;
         }
-
-        //animator.SetBool("isGameStarted", true);
-
         direction.z = forwardSpeed;
 
         isGrounded = Physics.CheckSphere(groundCheck.position, 0.15f, groundLayer);

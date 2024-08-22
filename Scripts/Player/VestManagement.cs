@@ -86,7 +86,6 @@ public class VestManagement : MonoBehaviour
     {
         yield return new WaitForSeconds(.1f);
         totVest = ScoreCount.savingWest;
-        Debug.Log("total West: " + ScoreCount.savingWest + " " + totVest);
 
         loop = true;
     }

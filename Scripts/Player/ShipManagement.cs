@@ -30,9 +30,7 @@ public class ShipManagement : MonoBehaviour
         {
             StartCoroutine(LoadData());
         }
-        Debug.Log("total Hammer: " + totHammer + " : " + ScoreCount.hammer+ " Ship Active: " + InGameManager.isActivateShip + " Ship Health: " + TriggerCollisionDetection.shipHealth);
-        Debug.Log("total Rope: " + totRope+" : "+ScoreCount.rope + " Ship Active: " + InGameManager.isActivateShip + " Ship Health: " + TriggerCollisionDetection.shipHealth);
-
+       
         if (totHammer > 0 && InGameManager.isActivateShip && TriggerCollisionDetection.shipHealth<100)
         {
             repairShipWithHammer.SetActive(true);

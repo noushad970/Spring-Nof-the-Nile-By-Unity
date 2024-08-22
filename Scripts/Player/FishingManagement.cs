@@ -59,7 +59,6 @@ public class FishingManagement : MonoBehaviour
 
     void CatchFish1()
     {
-        Debug.Log("Pressed CatchFishing");
         if (catchCount == 0)
         {
             catchCount = 1;

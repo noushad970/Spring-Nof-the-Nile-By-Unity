@@ -58,7 +58,7 @@ public class SwipeManager : MonoBehaviour
             else if (Input.GetMouseButton(0))
                 swipeDelta = (Vector2)Input.mousePosition - startTouch;
         }
-        if (swipeDelta.magnitude > 25)
+        if (swipeDelta.magnitude > 5)
         {
             float x = swipeDelta.x;
             float y = swipeDelta.y;

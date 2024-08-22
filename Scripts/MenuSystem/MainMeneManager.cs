@@ -94,7 +94,7 @@ public class MainMeneManager : MonoBehaviour
     public GameObject PriceSeabag, PriceCrossBow, PriceCanoe, PriceNutshell, PriceFishingBoat, PriceShip;
 
     public GameObject notificationBG,settingPanel, settingButtonObject;
-    
+    public GameObject[] confirmationPanels;
     [Header("Camera movementSystem")]
     public static bool isHomeScreen=false, isStoreScreen=false,isWeaponscreen = false, isItemScreen = false, isFishScreen = false, isVehicleScreen = false, itemIsBuyed=false,isSaveandLoadData=false;
     private void Start()
@@ -502,6 +502,7 @@ public class MainMeneManager : MonoBehaviour
         LoadingPanel.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         LoadingPanel.SetActive(false);
+       
     }
     void BuyArrow()
     {
@@ -516,7 +517,15 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
+        }
+    }
+    void ConfirmationPanelfalse()
+    {
+        for(int i=0;i<confirmationPanels.Length;i++)
+        {
+            confirmationPanels[i].SetActive(false);
         }
     }
     void yesBuyArrowPressed()
@@ -543,6 +552,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -571,6 +581,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -599,6 +610,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -626,6 +638,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -654,6 +667,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -681,6 +695,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -708,6 +723,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -735,6 +751,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -762,6 +779,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -789,6 +807,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -816,6 +835,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -843,6 +863,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -870,6 +891,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -897,6 +919,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -924,6 +947,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -952,6 +976,7 @@ public class MainMeneManager : MonoBehaviour
         {
             confirmationPanel.SetActive(true);
             NotEnoughCoinPanel.SetActive(true);
+            ConfirmationPanelfalse();
         }
     }
     void yesSellWood10()
@@ -978,6 +1003,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1006,6 +1032,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1034,6 +1061,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1063,6 +1091,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1091,6 +1120,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1120,6 +1150,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1149,6 +1180,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1177,6 +1209,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1205,6 +1238,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1233,6 +1267,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1263,6 +1298,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1292,6 +1328,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1321,6 +1358,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1349,6 +1387,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1377,6 +1416,7 @@ public class MainMeneManager : MonoBehaviour
         else
         {
             confirmationPanel.SetActive(true);
+            ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
