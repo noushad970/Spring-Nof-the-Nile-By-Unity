@@ -47,7 +47,7 @@ public class MainMeneManager : MonoBehaviour
     public GameObject VehicleStoreScreen;
     public GameObject StoreScreenBackButtonObject;
     public GameObject IndivitualShopScreenBackButtonObject,sellOrTradeScreen;
-    public GameObject LoadingPanel,NotEnoughCoinPanel,confirmationPanel,noButtonObject;
+    public GameObject LoadingPanel,NotEnoughCoinPanel,notEnoughItemPanel,confirmationPanel,noButtonObject;
 
     [Header("Game Screen Buttons")]
     public Button playButton;
@@ -516,8 +516,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -538,6 +539,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         arrowConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuySafari()
     {
@@ -551,8 +553,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+         //   ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -567,6 +570,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         safariConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyFighter()
     {
@@ -580,8 +584,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -596,6 +601,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         FigherConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyMachete()
     {
@@ -609,8 +615,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -624,6 +631,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         MacheteConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyWest()
     {
@@ -637,8 +645,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -652,13 +661,13 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         westConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyfishMan()
     {
         AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
-        StartCoroutine(notification("You have buyed 1 Fisherman"));
-        if (ScoreCount.totalcoins >= 100)
+         if (ScoreCount.totalcoins >= 100)
         {
             confirmationPanel.SetActive(true);
             noButtonObject.SetActive(true);
@@ -666,8 +675,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -681,6 +691,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         fishManConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyRod()
     {
@@ -694,8 +705,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -709,6 +721,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         rodConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyNet()
     {
@@ -722,8 +735,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+         //   ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -737,6 +751,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         netConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyBamboo()
     {
@@ -750,8 +765,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -765,6 +781,7 @@ public class MainMeneManager : MonoBehaviour
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         netConfirmPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     void BuyWood()
     {
@@ -778,8 +795,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -790,6 +808,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalWoodWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         woodconfirmPanel.SetActive(false);
@@ -806,8 +825,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -818,6 +838,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalRopeWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         ropeconfirmPanel.SetActive(false);
@@ -834,8 +855,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -846,6 +868,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalHammerWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 20;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         hammerconfirmPanel.SetActive(false);
@@ -862,8 +885,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+         //   ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -874,6 +898,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalBibleWhenEndRun += 1;
         ScoreCount.totalCoinsWhenEndRun -= 500;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         bibleconfirmPanel.SetActive(false);
@@ -890,9 +915,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesSellBamboo()
@@ -902,6 +928,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalBambooWhenEndRun -= 1;
         ScoreCount.totalCoinsWhenEndRun += 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         SellBambooconfirmPanel.SetActive(false);
@@ -918,9 +945,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesSellBamboo10()
@@ -930,6 +958,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalBambooWhenEndRun -= 10;
         ScoreCount.totalCoinsWhenEndRun += 150;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         SellBambooconfirmPanel10.SetActive(false);
@@ -946,9 +975,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesSellWood()
@@ -958,6 +988,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalWoodWhenEndRun -= 1;
         ScoreCount.totalCoinsWhenEndRun += 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         SellWoodconfirmPanel.SetActive(false);
@@ -974,9 +1005,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
-            NotEnoughCoinPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            notEnoughItemPanel.SetActive(true);
+            //ConfirmationPanelfalse();
         }
     }
     void yesSellWood10()
@@ -986,6 +1018,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalWoodWhenEndRun -= 10;
         ScoreCount.totalCoinsWhenEndRun += 150;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         SellWoodconfirmPanel.SetActive(false);
@@ -1002,9 +1035,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesBuyfishManWithFish()
@@ -1015,6 +1049,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalFishWhenEndRun -= 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         fisherTradeFishconfirmPanel.SetActive(false);
@@ -1031,9 +1066,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+           // ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesBuyfishManWithMeat()
@@ -1043,6 +1079,7 @@ public class MainMeneManager : MonoBehaviour
         AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalMeatWhenEndRun -= 10;
+        ConfirmationPanelfalse();
         itemIsBuyed = true;
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
@@ -1060,22 +1097,24 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesBuyfishManWithFruit()
     {
         StartCoroutine(notification("You have buyed 1 Fisherman"));
         AudioManager.instance.BuysomethingFX.Play();
-        AudioManager.instance.buttonPressSound.Play();
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalFruitWhenEndRun -= 10;
+        ConfirmationPanelfalse();
         itemIsBuyed = true;
+        
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
-        fisherTradeFruitconfirmPanel.SetActive(true);
+        fisherTradeFruitconfirmPanel.SetActive(false);
 
     }
     void BuyFighterWithFish()
@@ -1089,10 +1128,10 @@ public class MainMeneManager : MonoBehaviour
             fighterTradeFishconfirmPanel.SetActive(true);
         }
         else
-        {
+        {ConfirmationPanelfalse();
             confirmationPanel.SetActive(true);
-            ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesBuyFighterWithFish()
@@ -1103,6 +1142,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalFighterWhenEndRun += 1;
         ScoreCount.totalFishWhenEndRun -= 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         fighterTradeFishconfirmPanel.SetActive(false);
@@ -1119,9 +1159,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+           // ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesBuyFighterWithMeat()
@@ -1132,13 +1173,13 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalFighterWhenEndRun += 1;
         ScoreCount.totalMeatWhenEndRun -= 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         fighterTradeMeatconfirmPanel.SetActive(false);
     }
     void BuyFighterWithFruit()
     {
-        AudioManager.instance.BuysomethingFX.Play();
         AudioManager.instance.buttonPressSound.Play();
         //fishman price 100 $
         if (ScoreCount.totalFruits >= 10)
@@ -1149,9 +1190,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesBuyFighterWithFruit()
@@ -1162,6 +1204,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalFighterWhenEndRun += 1;
         ScoreCount.totalFruitWhenEndRun -= 10;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         fighterTradeFruitconfirmPanel.SetActive(true);
@@ -1179,9 +1222,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void YesExchangeGemWithCoin()
@@ -1191,6 +1235,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalCoinsWhenEndRun += 100;
         ScoreCount.totalGemWhenEndRun -= 1;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         gemCoinExchangeConfirmPanel.SetActive(true);
@@ -1208,9 +1253,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+           // ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void yesBuyfishManWithGem()
@@ -1221,6 +1267,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalFishManWhenEndRun += 1;
         ScoreCount.totalGemWhenEndRun -= 1;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         fisherTradeGemconfirmPanel.SetActive(false);
@@ -1237,9 +1284,10 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
-            NotEnoughCoinPanel.SetActive(true);
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
+            notEnoughItemPanel.SetActive(true);
         }
     }
     void YesExchangeWestWithBamboo()
@@ -1249,6 +1297,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalSavewestWhenEndRun += 1;
         ScoreCount.totalBambooWhenEndRun -= 3;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         westTradeBambooConfirmPanel.SetActive(false);
@@ -1266,8 +1315,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1279,6 +1329,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.totalCoinsWhenEndRun -= 1000;
         itemIsBuyed = true;
         confirmationPanel.SetActive(false);
+        ConfirmationPanelfalse();
         noButtonObject.SetActive(false);
         seaBagConfirmPanel.SetActive(false);
         StartCoroutine(notification("Congratulation! You have unlocked SeaBag. Now you can collect Unlimited Items!!"));
@@ -1297,8 +1348,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1310,6 +1362,7 @@ public class MainMeneManager : MonoBehaviour
        ScoreCount.isUnlockedCrossBow = true;
         ScoreCount.totalCoinsWhenEndRun -= 1000;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         CrossBowConfirmPanel.SetActive(false);
@@ -1327,8 +1380,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1340,6 +1394,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.isUnlockedCanoe = true;
         ScoreCount.totalCoinsWhenEndRun -= 1000;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         canoeConfirmPanel.SetActive(false);
@@ -1357,8 +1412,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            //ConfirmationPanelfalse();
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1370,6 +1426,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.isUnlockedNutshell = true;
         ScoreCount.totalCoinsWhenEndRun -= 2000;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         NutshelConfirmPanel.SetActive(false);
@@ -1386,8 +1443,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1399,6 +1457,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.isUnlockedFishingBoat = true;
         ScoreCount.totalCoinsWhenEndRun -= 5000;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         fishingBoatConfirmPanel.SetActive(false);
@@ -1415,8 +1474,9 @@ public class MainMeneManager : MonoBehaviour
         }
         else
         {
-            confirmationPanel.SetActive(true);
             ConfirmationPanelfalse();
+            confirmationPanel.SetActive(true);
+            
             NotEnoughCoinPanel.SetActive(true);
         }
     }
@@ -1428,6 +1488,7 @@ public class MainMeneManager : MonoBehaviour
         ScoreCount.isUnlockedShip = true;
         ScoreCount.totalCoinsWhenEndRun -= 10000;
         itemIsBuyed = true;
+        ConfirmationPanelfalse();
         confirmationPanel.SetActive(false);
         noButtonObject.SetActive(false);
         shipConfirmPanel.SetActive(false);
@@ -1446,12 +1507,14 @@ public class MainMeneManager : MonoBehaviour
         safariConfirmPanel.SetActive(false);
         FigherConfirmPanel.SetActive(false);
         MacheteConfirmPanel.SetActive(false);
+        CrossBowConfirmPanel.SetActive(false);
         fishManConfirmPanel.SetActive(false);
         netConfirmPanel.SetActive (false);
         rodConfirmPanel.SetActive (false);
         woodconfirmPanel.SetActive (false);
         bambooconfirmPanel.SetActive (false);
         hammerconfirmPanel.SetActive (false);
+        seaBagConfirmPanel.SetActive(false);
         bibleconfirmPanel.SetActive (false);
         ropeconfirmPanel.SetActive (false);
         SellWoodconfirmPanel.SetActive(false);
@@ -1476,12 +1539,14 @@ public class MainMeneManager : MonoBehaviour
 
     }
     
-    void OkButtonPressed()
+    public void OkButtonPressed()
     {
 
         AudioManager.instance.buttonPressSound.Play();
         NotEnoughCoinPanel.SetActive(false);
+        notEnoughItemPanel.SetActive(false);
         confirmationPanel.SetActive(false);
+        ConfirmationPanelfalse();
     }
     IEnumerator notification(string s)
     {

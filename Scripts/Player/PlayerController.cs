@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem boomParticleSystem;
     public ParticleSystem poisonedTextParticleSystem,poisonedEffectParticleSystem;
     public ParticleSystem bloodParticleSystem,boomblastParticle;
-    bool loadPos;
+    public bool loadPos;
 
     public GameObject bgMusic;
     bool loop,loop2;
@@ -289,7 +289,7 @@ public class PlayerController : MonoBehaviour
         
         if (forwardSpeed < maxSpeed)
         {
-            forwardSpeed += 0.05f * Time.deltaTime;
+            forwardSpeed += 0.1f * Time.deltaTime;
         }
         direction.z = forwardSpeed;
 
@@ -384,7 +384,7 @@ public class PlayerController : MonoBehaviour
         jackBody.transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
-    IEnumerator LoadPos()
+    public IEnumerator LoadPos()
     {
         controller.center = new Vector3(0, 0.75f, 0.45f);
         controller.radius = .5f;

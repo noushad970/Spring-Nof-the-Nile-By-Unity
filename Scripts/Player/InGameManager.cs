@@ -135,6 +135,7 @@ public class InGameManager : MonoBehaviour
             TriggerCollisionDetection.isDestroyBoat=false;
             TriggerCollisionDetection.isSinglePlayer = true;
             TriggerCollisionDetection.isPlayerWithBoat = false;
+            PlayerController.instance.loadPos = true;
             StartCoroutine (DestroyRaft());
         }
 
@@ -150,6 +151,7 @@ public class InGameManager : MonoBehaviour
             TriggerCollisionDetection.isDestroyBoat = false;
             TriggerCollisionDetection.isSinglePlayer = true;
             TriggerCollisionDetection.isPlayerWithBoat = false;
+            PlayerController.instance.loadPos = true;
             StartCoroutine(DestroyCanoe());
         }
         if (TriggerCollisionDetection.isGetNutshellBoatItem)
@@ -164,6 +166,7 @@ public class InGameManager : MonoBehaviour
             TriggerCollisionDetection.isDestroyBoat = false;
             TriggerCollisionDetection.isSinglePlayer = true;
             TriggerCollisionDetection.isPlayerWithBoat = false;
+            PlayerController.instance.loadPos = true;
             StartCoroutine(DestroyNutshell());
         }
         if (TriggerCollisionDetection.isGetFishingBoatItem)
@@ -178,6 +181,7 @@ public class InGameManager : MonoBehaviour
             TriggerCollisionDetection.isDestroyBoat = false;
             TriggerCollisionDetection.isSinglePlayer = true;
             TriggerCollisionDetection.isPlayerWithBoat = false;
+            PlayerController.instance.loadPos = true;
             StartCoroutine(DestroyFishingBoat());
         }
         if (TriggerCollisionDetection.isGetShipItem)
@@ -297,6 +301,10 @@ public class InGameManager : MonoBehaviour
     IEnumerator EnableRaft()
     {
         isActivateRaft=true;
+        isActivateFishingBoat = false;
+        isActivateCanoe = false;
+        isActivateNutshel = false;
+        isActivateShip = false;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithRaft.SetActive(true);
@@ -332,6 +340,10 @@ public class InGameManager : MonoBehaviour
     IEnumerator EnableCanoe()
     {
         isActivateCanoe=true;
+        isActivateFishingBoat = false;
+        isActivateNutshel = false;
+        isActivateRaft = false;
+        isActivateShip = false;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithCanoe.SetActive(true);
@@ -365,6 +377,10 @@ public class InGameManager : MonoBehaviour
     IEnumerator EnableNutshell()
     {
         isActivateNutshel = true;
+        isActivateFishingBoat = false;
+        isActivateCanoe = false;
+        isActivateRaft = false;
+        isActivateShip = false;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithNutshell.SetActive(true);
@@ -400,6 +416,10 @@ public class InGameManager : MonoBehaviour
     IEnumerator EnableFishingBoat()
     {
         isActivateFishingBoat = true;
+        isActivateCanoe = false;
+        isActivateNutshel = false;
+        isActivateRaft=false;
+        isActivateShip=false;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         CharWithFishing.SetActive(true);
@@ -436,6 +456,11 @@ public class InGameManager : MonoBehaviour
     IEnumerator EnableShip()
     {
         isActivateShip= true;
+
+        isActivateFishingBoat = false;
+        isActivateCanoe = false;
+        isActivateNutshel = false;
+        isActivateRaft = false;
         upgradeCharParticle.SetActive(true);
         yield return new WaitForSeconds(1);
         OnlyChar.SetActive(false);

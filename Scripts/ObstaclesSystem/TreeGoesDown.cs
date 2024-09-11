@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TreeGoesDown : MonoBehaviour
 {
-    public float rotationSpeed = 1f; // Speed of rotation
+    public float rotationSpeed = 5f; // Speed of rotation
     public float zRotationSpeed = 30f; // Speed of rotation around the z-axis
     private bool isRotating = true;
     private Quaternion targetRotation;
